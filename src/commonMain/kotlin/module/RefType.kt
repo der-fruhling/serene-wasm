@@ -1,6 +1,8 @@
 package net.derfruhling.serene.wasm.module
 
 import net.derfruhling.serene.wasm.*
+import net.derfruhling.serene.wasm.printer.Printer
+import net.derfruhling.serene.wasm.printer.print
 
 sealed interface RefType : ValueType {
     val heapType: HeapType
@@ -12,12 +14,23 @@ sealed interface RefType : ValueType {
             }
             heapType.encode(out)
         }
+
+        override fun Printer.print() = wrapInline {
+            word("ref")
+            word("null")
+            heapType.print(this)
+        }
     }
 
     data class NonNull(override val heapType: HeapType) : RefType {
         override fun encode(out: WasmWriter) {
             out.writeByte(Constants.REF_TYPE_NOT_NULL)
             heapType.encode(out)
+        }
+
+        override fun Printer.print() = wrapInline {
+            word("ref")
+            heapType.print(this)
         }
     }
 

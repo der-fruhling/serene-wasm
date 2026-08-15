@@ -162,7 +162,7 @@ enum class OpType {
                         throw LegacyExceptionsUnsupportedException("The provided visitor is not capable of processing legacy exceptions instructions, yet there are such instructions present in the provided code")
 
                     val blockType = BlockType.decode(reader)
-                    return visitor.visitLegacyTry(blockType)
+                    return visitor.visitLegacyTry(op, blockType)
                 }
 
                 Op.LEGACY_CATCH -> {

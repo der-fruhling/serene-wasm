@@ -17,3 +17,5 @@ fun Byte.fixByte(): Byte {
     val signBit = b and 0x80u
     return (b and 0x3fu).toByte() or signBit.rotateRight(1).toByte()
 }
+
+infix fun Int.pow(exponent: Int) = (0..<exponent - 1).fold(this) { a, _ -> a * this }

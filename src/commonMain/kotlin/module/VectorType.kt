@@ -7,7 +7,7 @@ import net.derfruhling.serene.wasm.WasmReader
 import net.derfruhling.serene.wasm.module.Type.SimpleType
 
 sealed interface VectorType : ValueType, Default, Unpackable {
-    data object V128 : SimpleType<V128>(Constants.TYPE_V128), VectorType {
+    data object V128 : SimpleType<V128>(Constants.TYPE_V128, "v128"), VectorType {
         override val size: Int
             get() = 16
     }

@@ -1,0 +1,45 @@
+# Version catalog is a central place for you to declare and version dependencies
+# https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
+# https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
+
+[versions]
+kotlin = "2.3.20"
+android-gradle = "9.3.0"
+androidx-compose = "1.11.4"
+junit-jupiter = "6.1.1"
+kotlinx-serialization = "1.11.0"
+kotlinx-coroutines = "1.11.0"
+kotlinx-collections = "0.5.1"
+kotlinx-io = "0.9.1"
+kotlinx-datetime = "0.8.0"
+serenity = "0.1.0-SNAPSHOT"
+kotlin-wrappers = "2026.7.2"
+kotlin-logging = "8.0.4"
+ktor = "3.5.1"
+ksp-version = "2.3.10"
+
+[libraries]
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
+kotlinx-io = { module = "org.jetbrains.kotlinx:kotlinx-io-core", version.ref = "kotlinx-io" }
+
+junit-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junit-jupiter" }
+junit-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "junit-jupiter" }
+oshai-kotlinLogging = { module = "io.github.oshai:kotlin-logging", version.ref = "kotlin-logging" }
+slf4j-api = { module = "org.slf4j:slf4j-api", version = "2.+" }
+
+logback-classic = { module = "ch.qos.logback:logback-classic", version = "1.5.38" }
+
+clikt = { module = "com.github.ajalt.clikt:clikt-core", version = "5.1.0" }
+
+[plugins]
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+android-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "android-gradle"}
+kotlin-plugin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-plugin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+sassBase = { id = "io.freefair.sass-base", version = "9.5.0" }
+stabilityAnalyzer = { id = "com.github.skydoves.compose.stability.analyzer", version = "0.12.0" }
+javaModularity = { id = "org.javamodularity.moduleplugin", version = "2.0.0" }
+kotlin-ksp = { id = "com.google.devtools.ksp", version = "2.3.10" }
+kotest = { id = "io.kotest", version = "6.2.3" }

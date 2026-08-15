@@ -10,12 +10,12 @@ sealed interface PackType : StorageType, Unpackable {
     override val valueType: ValueType
         get() = NumericType.I32
 
-    data object I8 : SimpleType<I8>(Constants.PACK_TYPE_I8), PackType {
+    data object I8 : SimpleType<I8>(Constants.PACK_TYPE_I8, "i8"), PackType {
         override val size: Int
             get() = 1
     }
 
-    data object I16 : SimpleType<I16>(Constants.PACK_TYPE_I16), PackType {
+    data object I16 : SimpleType<I16>(Constants.PACK_TYPE_I16, "i16"), PackType {
         override val size: Int
             get() = 2
     }

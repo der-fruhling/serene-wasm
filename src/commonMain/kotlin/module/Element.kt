@@ -6,9 +6,42 @@ import net.derfruhling.serene.wasm.DeferredDecode
 import net.derfruhling.serene.wasm.Encode
 import net.derfruhling.serene.wasm.WasmReader
 import net.derfruhling.serene.wasm.WasmWriter
+import net.derfruhling.serene.wasm.printer.ExpressionFormatter
+import net.derfruhling.serene.wasm.printer.Namespace
+import net.derfruhling.serene.wasm.printer.Printable
+import net.derfruhling.serene.wasm.printer.Printer
+import net.derfruhling.serene.wasm.printer.print
 
-sealed interface Element : Encode {
-    data class Functions(val mode: ElementMode, val functions: List<UInt>) : Element {
+sealed interface Element : Encode, Printable {
+    val mode: ElementMode
+
+    fun Printer.printMode() {
+        when(val m = mode) {
+            is ElementMode.Active -> {
+                wrapInline {
+                    word("table")
+                    word(names.resolveNameInfer(Namespace.TABLE, m.tableIndex))
+                }
+
+                m.offsetExpr.visit(ExpressionFormatter(this))
+                indent++
+                append("  ")
+            }
+
+            ElementMode.Declarative -> {
+                word("declare")
+                indent++
+                append(indentStr)
+            }
+
+            ElementMode.Passive -> {
+                indent++
+                append(indentStr)
+            }
+        }
+    }
+
+    data class Functions(override val mode: ElementMode, val functions: List<UInt>) : Element {
         override fun encode(out: WasmWriter) {
             when(mode) {
                 is ElementMode.Active -> {
@@ -34,6 +67,18 @@ sealed interface Element : Encode {
             }
 
             out.writeList(functions) { writeUInt(it) }
+        }
+
+        override fun Printer.print() {
+            printMode()
+
+            word("func")
+
+            for(index in functions) {
+                word(names.resolveNameInfer(Namespace.FUNC, index))
+            }
+
+            indent--
         }
 
         companion object {
@@ -70,7 +115,7 @@ sealed interface Element : Encode {
         }
     }
 
-    data class Expressions(val mode: ElementMode, val type: RefType, val expressions: List<CodeBlob>) : Element {
+    data class Expressions(override val mode: ElementMode, val type: RefType, val expressions: List<CodeBlob>) : Element {
         override fun encode(out: WasmWriter) {
             when(mode) {
                 is ElementMode.Active -> {
@@ -97,6 +142,20 @@ sealed interface Element : Encode {
             }
 
             out.writeList(expressions) { writeBytes(it.byteString) }
+        }
+
+        override fun Printer.print() {
+            printMode()
+            type.print(this)
+
+            appendLine()
+            for(expr in expressions) {
+                wrap {
+                    word("item")
+                    expr.visit(ExpressionFormatter(this))
+                }
+            }
+            indent--
         }
 
         companion object {

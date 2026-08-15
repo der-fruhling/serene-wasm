@@ -3,12 +3,17 @@ package net.derfruhling.serene.wasm.module
 import kotlinx.io.bytestring.ByteString
 import kotlinx.io.readByteString
 import net.derfruhling.serene.wasm.*
+import net.derfruhling.serene.wasm.printer.InlineExpressionFormatter
+import net.derfruhling.serene.wasm.printer.Namespace
+import net.derfruhling.serene.wasm.printer.Printable
+import net.derfruhling.serene.wasm.printer.Printer
+import net.derfruhling.serene.wasm.printer.string
 
 class DataSegment private constructor(
     val memoryIndex: UInt,
     val offsetExpr: CodeBlob?,
     val bytes: ByteString
-) : Encode {
+) : Encode, Printable {
     override fun encode(out: WasmWriter) {
         out.writeByte(
             if (offsetExpr == null) {
@@ -26,6 +31,15 @@ class DataSegment private constructor(
         if (offsetExpr != null) out.writeBytes(offsetExpr.byteString)
         out.writeUInt(bytes.size.toUInt())
         out.writeBytes(bytes)
+    }
+
+    override fun Printer.print() {
+        if(offsetExpr != null) {
+            word(names.resolveName(Namespace.MEMORY, memoryIndex))
+            offsetExpr.visit(InlineExpressionFormatter(this))
+        }
+
+        string(bytes)
     }
 
     companion object : Decode<DataSegment> {

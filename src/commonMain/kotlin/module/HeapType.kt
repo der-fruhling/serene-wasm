@@ -2,24 +2,30 @@ package net.derfruhling.serene.wasm.module
 
 import net.derfruhling.serene.wasm.*
 import net.derfruhling.serene.wasm.module.Type.SimpleType
+import net.derfruhling.serene.wasm.printer.Namespace
+import net.derfruhling.serene.wasm.printer.Printer
 
 sealed interface HeapType : Type {
-    data object Exn : SimpleType<Exn>(Constants.ABS_HEAP_TYPE_EXN), Abstract
-    data object Array : SimpleType<Array>(Constants.ABS_HEAP_TYPE_ARRAY), Abstract
-    data object Struct : SimpleType<Struct>(Constants.ABS_HEAP_TYPE_STRUCT), Abstract
-    data object I31 : SimpleType<I31>(Constants.ABS_HEAP_TYPE_I31), Abstract
-    data object Eq : SimpleType<Eq>(Constants.ABS_HEAP_TYPE_EQ), Abstract
-    data object Any : SimpleType<Any>(Constants.ABS_HEAP_TYPE_ANY), Abstract
-    data object Extern : SimpleType<Extern>(Constants.ABS_HEAP_TYPE_EXTERN), Abstract
-    data object Func : SimpleType<Func>(Constants.ABS_HEAP_TYPE_FUNC), Abstract
-    data object None : SimpleType<None>(Constants.ABS_HEAP_TYPE_NONE), Abstract
-    data object NoExtern : SimpleType<NoExtern>(Constants.ABS_HEAP_TYPE_NOEXTERN), Abstract
-    data object NoFunc : SimpleType<NoFunc>(Constants.ABS_HEAP_TYPE_NOFUNC), Abstract
-    data object NoExn : SimpleType<NoExn>(Constants.ABS_HEAP_TYPE_NOEXN), Abstract
+    data object Exn : SimpleType<Exn>(Constants.ABS_HEAP_TYPE_EXN, "exn"), Abstract
+    data object Array : SimpleType<Array>(Constants.ABS_HEAP_TYPE_ARRAY, "array"), Abstract
+    data object Struct : SimpleType<Struct>(Constants.ABS_HEAP_TYPE_STRUCT, "struct"), Abstract
+    data object I31 : SimpleType<I31>(Constants.ABS_HEAP_TYPE_I31, "i31"), Abstract
+    data object Eq : SimpleType<Eq>(Constants.ABS_HEAP_TYPE_EQ, "eq"), Abstract
+    data object Any : SimpleType<Any>(Constants.ABS_HEAP_TYPE_ANY, "any"), Abstract
+    data object Extern : SimpleType<Extern>(Constants.ABS_HEAP_TYPE_EXTERN, "extern"), Abstract
+    data object Func : SimpleType<Func>(Constants.ABS_HEAP_TYPE_FUNC, "func"), Abstract
+    data object None : SimpleType<None>(Constants.ABS_HEAP_TYPE_NONE, "none"), Abstract
+    data object NoExtern : SimpleType<NoExtern>(Constants.ABS_HEAP_TYPE_NOEXTERN, "noextern"), Abstract
+    data object NoFunc : SimpleType<NoFunc>(Constants.ABS_HEAP_TYPE_NOFUNC, "nofunc"), Abstract
+    data object NoExn : SimpleType<NoExn>(Constants.ABS_HEAP_TYPE_NOEXN, "noexn"), Abstract
 
-    data class ByIndex(val index: Int) : Type, HeapType, DeferredDecode<ByIndex> {
+    data class ByIndex(val index: UInt) : Type, HeapType, DeferredDecode<ByIndex> {
         override fun encode(out: WasmWriter) {
-            out.writeInt(index)
+            out.writeInt(index.toInt())
+        }
+
+        override fun Printer.print() {
+            word(names.resolveName(Namespace.TYPE, index))
         }
 
         override fun finishDecoding(reader: WasmReader): ByIndex {
@@ -61,7 +67,7 @@ sealed interface HeapType : Type {
 
             @Suppress("UNCHECKED_CAST")
             return if (i < 0) Abstract.fromByte(i.toByte().fixByte()) as DeferredDecode<HeapType>?
-            else ByIndex(i)
+            else ByIndex(i.toUInt())
         }
     }
 }

@@ -164,7 +164,7 @@ class WasmWriterInstructionVisitor(val writer: WasmWriter) : CommonWasmWriterIns
         writer.writeByte(0x0B)
     }
 
-    override fun visitLegacyTry(blockType: BlockType): LegacyTryBlockVisitor {
+    override fun visitLegacyTry(op: Op, blockType: BlockType): LegacyTryBlockVisitor {
         writer.writeByte(0x06)
         blockType.encode(writer)
         return LegacyTry()

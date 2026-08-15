@@ -7,22 +7,22 @@ import net.derfruhling.serene.wasm.WasmReader
 import net.derfruhling.serene.wasm.module.Type.SimpleType
 
 sealed interface NumericType : ValueType, Unpackable, Default {
-    data object I32 : SimpleType<I32>(Constants.TYPE_I32), NumericType {
+    data object I32 : SimpleType<I32>(Constants.TYPE_I32, "i32"), NumericType {
         override val size: Int
             get() = 4
     }
 
-    data object I64 : SimpleType<I64>(Constants.TYPE_I64), NumericType {
+    data object I64 : SimpleType<I64>(Constants.TYPE_I64, "i64"), NumericType {
         override val size: Int
             get() = 8
     }
 
-    data object F32 : SimpleType<F32>(Constants.TYPE_F32), NumericType {
+    data object F32 : SimpleType<F32>(Constants.TYPE_F32, "f32"), NumericType {
         override val size: Int
             get() = 4
     }
 
-    data object F64 : SimpleType<F64>(Constants.TYPE_F64), NumericType {
+    data object F64 : SimpleType<F64>(Constants.TYPE_F64, "f64"), NumericType {
         override val size: Int
             get() = 8
     }

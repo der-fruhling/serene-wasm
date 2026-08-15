@@ -8,7 +8,6 @@ import net.derfruhling.serene.wasm.instruction.UnknownInstructionException
 import net.derfruhling.serene.wasm.instruction.WasmWriterInstructionVisitor
 import net.derfruhling.serene.wasm.module.InvalidModuleDataException
 import kotlin.experimental.and
-import kotlin.experimental.or
 import kotlin.reflect.KProperty
 
 class PositionKeeper private constructor(var position: Long) {
@@ -179,9 +178,14 @@ class WasmReader(private val source: Source, internal val keeper: PositionKeeper
     }
 
     fun readExpr(): CodeBlob {
+        val buffer = Buffer()
+        val writerVisitor = WasmWriterInstructionVisitor(WasmWriter(buffer))
+        visitExpr(writerVisitor)
+        return CodeBlob(buffer.readByteString())
+    }
+
+    fun visitExpr(writerVisitor: InstructionVisitor) {
         try {
-            val buffer = Buffer()
-            val writerVisitor = WasmWriterInstructionVisitor(WasmWriter(buffer))
             var currentVisitor: InstructionVisitor = writerVisitor
             val blockStack = arrayListOf<InstructionVisitor>()
 
@@ -190,12 +194,12 @@ class WasmReader(private val source: Source, internal val keeper: PositionKeeper
                 val newVisitor = op.type.visit(this, op, blockStack.lastOrNull(), currentVisitor)
                     ?: break
 
-                if(newVisitor !== currentVisitor) {
-                    when(op) {
+                if (newVisitor !== currentVisitor) {
+                    when (op) {
                         Op.END -> blockStack.removeLast()
                         Op.ELSE -> {}
                         else -> {
-                            if(op.type.shouldPushCurrentBlock(op))
+                            if (op.type.shouldPushCurrentBlock(op))
                                 blockStack.add(currentVisitor)
                         }
                     }
@@ -203,9 +207,7 @@ class WasmReader(private val source: Source, internal val keeper: PositionKeeper
                     currentVisitor = newVisitor
                 }
             }
-
-            return CodeBlob(buffer.readByteString())
-        } catch(e: EOFException) {
+        } catch (e: EOFException) {
             throw InvalidModuleDataException("Expression did not end correctly", e)
         }
     }

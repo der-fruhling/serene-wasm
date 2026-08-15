@@ -15,6 +15,8 @@ abstract class CustomSection(val name: String) : Section {
 
     protected abstract fun encodeCustom(out: WasmWriter)
 
+    internal fun encodeCustomInternal(out: WasmWriter) = encodeCustom(out)
+
     fun interface Factory<T: CustomSection> {
         fun parseFrom(reader: WasmReader): T
     }

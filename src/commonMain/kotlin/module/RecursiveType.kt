@@ -6,6 +6,10 @@ import net.derfruhling.serene.wasm.DeferredDecode
 import net.derfruhling.serene.wasm.WasmReader
 import net.derfruhling.serene.wasm.WasmWriter
 import net.derfruhling.serene.wasm.map
+import net.derfruhling.serene.wasm.printer.Namespace
+import net.derfruhling.serene.wasm.printer.Printer
+import net.derfruhling.serene.wasm.printer.identWord
+import net.derfruhling.serene.wasm.printer.print
 
 sealed interface RecursiveType : Type {
     sealed interface SubType : RecursiveType {
@@ -22,6 +26,23 @@ sealed interface RecursiveType : Type {
         override fun encode(out: WasmWriter) {
             out.writeByte(Constants.REC_TYPE_COMPOUND)
             out.writeList(subTypes)
+        }
+
+        override fun Printer.print() {
+            word("rec")
+            val i = names.currentType
+
+            appendLine()
+            indent++
+            for((j, sub) in subTypes.withIndex()) wrap {
+                word("type")
+                names.resolveTypeName(i + j.toUInt())?.let { identWord(it) }
+                wrapInline { sub.print(this) }
+            }
+            indent--
+            append(indentStr)
+
+            names.currentType += subTypes.size.toUInt()
         }
 
         companion object : Decode<Compound> {
@@ -42,6 +63,17 @@ sealed interface RecursiveType : Type {
             compositeType.encode(out)
         }
 
+        override fun Printer.print() {
+            word("sub")
+            word("final")
+
+            for(use in typeUses) {
+                word(names.resolveName(Namespace.TYPE, use))
+            }
+
+            wrapInline { compositeType.print(this) }
+        }
+
         companion object : Decode<Final> {
             override fun deferredDecode(reader: WasmReader): DeferredDecode<Final>? {
                 CompositeType.nestedDecode(reader)?.let { return it.map { t -> Final(emptyList(), t) } }
@@ -56,6 +88,16 @@ sealed interface RecursiveType : Type {
             out.writeByte(Constants.SUB_TYPE_NON_FINAL)
             out.writeList(typeUses, WasmWriter::writeUInt)
             compositeType.encode(out)
+        }
+
+        override fun Printer.print() {
+            word("sub")
+
+            for(use in typeUses) {
+                word(names.resolveName(Namespace.TYPE, use))
+            }
+
+            wrapInline { compositeType.print(this) }
         }
 
         companion object : Decode<NonFinal> {

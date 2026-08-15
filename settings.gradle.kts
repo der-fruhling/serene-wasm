@@ -1,13 +1,13 @@
-plugins {
-    id("com.gradle.develocity") version "4.5.0"
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        google()
+        mavenCentral()
+    }
 }
 
-dependencyResolutionManagement {
-    versionCatalogs {
-        create("libs") {
-            from(files("../../gradle/libs.versions.toml"))
-        }
-    }
+plugins {
+    id("com.gradle.develocity") version "4.5.0"
 }
 
 rootProject.name = "serene-wasm"

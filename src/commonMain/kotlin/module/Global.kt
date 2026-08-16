@@ -18,7 +18,7 @@ data class Global(val type: GlobalType, val expr: CodeBlob) : Encode, Printable 
 
     override fun Printer.print() {
         type.print(this)
-        if(expr.isSimpleInlineExpr()) {
+        if(expr.isSimpleInlineExpr) {
             expr.visit(InlineExpressionFormatter(this))
         } else {
             expr.visit(ExpressionFormatter(this))

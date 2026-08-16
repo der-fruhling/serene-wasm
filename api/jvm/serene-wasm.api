@@ -38,19 +38,10 @@ public final class net/derfruhling/serene/wasm/BitMathKt {
 }
 
 public final class net/derfruhling/serene/wasm/CodeBlob {
-	public static final synthetic fun box-impl (Lkotlinx/io/bytestring/ByteString;)Lnet/derfruhling/serene/wasm/CodeBlob;
-	public static fun constructor-impl (Lkotlinx/io/bytestring/ByteString;)Lkotlinx/io/bytestring/ByteString;
-	public fun equals (Ljava/lang/Object;)Z
-	public static fun equals-impl (Lkotlinx/io/bytestring/ByteString;Ljava/lang/Object;)Z
-	public static final fun equals-impl0 (Lkotlinx/io/bytestring/ByteString;Lkotlinx/io/bytestring/ByteString;)Z
+	public fun <init> (Lkotlinx/io/bytestring/ByteString;)V
 	public final fun getByteString ()Lkotlinx/io/bytestring/ByteString;
-	public fun hashCode ()I
-	public static fun hashCode-impl (Lkotlinx/io/bytestring/ByteString;)I
-	public static final fun isSimpleInlineExpr-impl (Lkotlinx/io/bytestring/ByteString;)Z
-	public fun toString ()Ljava/lang/String;
-	public static fun toString-impl (Lkotlinx/io/bytestring/ByteString;)Ljava/lang/String;
-	public final synthetic fun unbox-impl ()Lkotlinx/io/bytestring/ByteString;
-	public static final fun visit-impl (Lkotlinx/io/bytestring/ByteString;Lnet/derfruhling/serene/wasm/instruction/InstructionVisitor;)V
+	public final fun isSimpleInlineExpr ()Z
+	public final fun visit (Lnet/derfruhling/serene/wasm/instruction/InstructionVisitor;)V
 }
 
 public final class net/derfruhling/serene/wasm/Constants {
@@ -154,11 +145,12 @@ public final class net/derfruhling/serene/wasm/MutableWasmModule : net/derfruhli
 
 public final class net/derfruhling/serene/wasm/PositionKeeper {
 	public fun <init> ()V
-	public final fun getPosition ()J
 	public final fun getValue (Ljava/lang/Object;Lkotlin/reflect/KProperty;)J
 	public final fun inherit ()Lnet/derfruhling/serene/wasm/PositionKeeper;
-	public final fun setPosition (J)V
 	public final fun setValue (Ljava/lang/Object;Lkotlin/reflect/KProperty;J)V
+}
+
+public abstract interface annotation class net/derfruhling/serene/wasm/UnstablePublicApi : java/lang/annotation/Annotation {
 }
 
 public final class net/derfruhling/serene/wasm/WasmModule {
@@ -206,7 +198,7 @@ public final class net/derfruhling/serene/wasm/WasmReader {
 	public final fun advanceTo (Lnet/derfruhling/serene/wasm/WasmReader;)V
 	public final fun commonGenericIntRead (Ljava/lang/Object;Lkotlin/jvm/functions/Function3;)Lkotlin/Triple;
 	public final fun consume ()Lkotlinx/io/bytestring/ByteString;
-	public final fun getBytesRead ()J
+	public final fun getPosition ()J
 	public final fun isExhausted ()Z
 	public final fun peek ()Lnet/derfruhling/serene/wasm/WasmReader;
 	public final fun readByte ()B
@@ -214,7 +206,7 @@ public final class net/derfruhling/serene/wasm/WasmReader {
 	public final fun readBytes (J)Lkotlinx/io/Buffer;
 	public final fun readBytes-WZ4Q5Ns (I)Lkotlinx/io/Buffer;
 	public final fun readDouble ()D
-	public final fun readExpr-5MyoIYE ()Lkotlinx/io/bytestring/ByteString;
+	public final fun readExpr ()Lnet/derfruhling/serene/wasm/CodeBlob;
 	public final fun readFloat ()F
 	public final fun readGenericInt (Ljava/lang/Object;Lkotlin/jvm/functions/Function3;)Ljava/lang/Object;
 	public final fun readGenericSignedInt (Ljava/lang/Object;Lkotlin/jvm/functions/Function2;Lkotlin/jvm/functions/Function3;)Ljava/lang/Object;
@@ -223,17 +215,12 @@ public final class net/derfruhling/serene/wasm/WasmReader {
 	public final fun readLong ()J
 	public final fun readMagicUInt-pVg5ArA ()I
 	public final fun readOp ()Lnet/derfruhling/serene/wasm/instruction/Op;
-	public final fun readStaticInt ()I
-	public final fun readStaticLong ()J
-	public final fun readStaticShort ()S
 	public final fun readStaticUInt-pVg5ArA ()I
-	public final fun readStaticULong-s-VKNKU ()J
-	public final fun readStaticUShort-Mh2AYeg ()S
 	public final fun readString ()Ljava/lang/String;
 	public final fun readUInt-pVg5ArA ()I
 	public final fun readULong-s-VKNKU ()J
 	public final fun readUntil (Lkotlin/jvm/functions/Function1;)Lkotlinx/io/Buffer;
-	public final fun setBytesRead (J)V
+	public final fun setPosition (J)V
 	public final fun visitExpr (Lnet/derfruhling/serene/wasm/instruction/InstructionVisitor;)V
 }
 
@@ -297,7 +284,6 @@ public abstract class net/derfruhling/serene/wasm/instruction/AnyInstructionVisi
 	public fun visitIf (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;)Lnet/derfruhling/serene/wasm/instruction/IfBlockVisitor;
 	public fun visitIndex-Qn1smSk (Lnet/derfruhling/serene/wasm/instruction/Op;I)V
 	public fun visitIndices-BltQuoY (Lnet/derfruhling/serene/wasm/instruction/Op;II)V
-	public fun visitLegacyTry (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;)Lnet/derfruhling/serene/wasm/instruction/LegacyTryBlockVisitor;
 	public fun visitMemoryOp (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/instruction/MemArg;)V
 	public fun visitMemoryOpWithLane (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/instruction/MemArg;B)V
 	public fun visitSelect (Lnet/derfruhling/serene/wasm/instruction/Op;Ljava/util/List;)V
@@ -306,80 +292,8 @@ public abstract class net/derfruhling/serene/wasm/instruction/AnyInstructionVisi
 	public fun visitWithLane (Lnet/derfruhling/serene/wasm/instruction/Op;B)V
 }
 
-public final class net/derfruhling/serene/wasm/instruction/AnyInstructionVisitor$IfBlock : net/derfruhling/serene/wasm/instruction/CompleteInstructionVisitor, net/derfruhling/serene/wasm/instruction/IfBlockVisitor {
-	public fun <init> (Lnet/derfruhling/serene/wasm/instruction/AnyInstructionVisitor;)V
-	public fun visitBlock (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;)Lnet/derfruhling/serene/wasm/instruction/InstructionVisitor;
-	public fun visitBranchOnCast-Yuhug_o (Lnet/derfruhling/serene/wasm/instruction/Op;ILnet/derfruhling/serene/wasm/module/RefType;Lnet/derfruhling/serene/wasm/module/RefType;)V
-	public fun visitBranchTable-jXDDuk8 (Lnet/derfruhling/serene/wasm/instruction/Op;Ljava/util/List;I)V
-	public fun visitCatchTable (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;Ljava/util/List;)Lnet/derfruhling/serene/wasm/instruction/InstructionVisitor;
-	public fun visitConstF32 (Lnet/derfruhling/serene/wasm/instruction/Op;F)V
-	public fun visitConstF64 (Lnet/derfruhling/serene/wasm/instruction/Op;D)V
-	public fun visitConstI32 (Lnet/derfruhling/serene/wasm/instruction/Op;I)V
-	public fun visitConstI64 (Lnet/derfruhling/serene/wasm/instruction/Op;J)V
-	public fun visitConstV128 (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/instruction/VectorValue;)V
-	public fun visitElse ()Lnet/derfruhling/serene/wasm/instruction/InstructionVisitor;
-	public fun visitEnd ()V
-	public fun visitIf (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;)Lnet/derfruhling/serene/wasm/instruction/IfBlockVisitor;
-	public fun visitIndex-Qn1smSk (Lnet/derfruhling/serene/wasm/instruction/Op;I)V
-	public fun visitIndices-BltQuoY (Lnet/derfruhling/serene/wasm/instruction/Op;II)V
-	public fun visitLegacyTry (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;)Lnet/derfruhling/serene/wasm/instruction/LegacyTryBlockVisitor;
-	public fun visitMemoryOp (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/instruction/MemArg;)V
-	public fun visitMemoryOpWithLane (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/instruction/MemArg;B)V
-	public fun visitSelect (Lnet/derfruhling/serene/wasm/instruction/Op;Ljava/util/List;)V
-	public fun visitSimple (Lnet/derfruhling/serene/wasm/instruction/Op;)V
-	public fun visitWithHeapType (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/HeapType;)V
-	public fun visitWithLane (Lnet/derfruhling/serene/wasm/instruction/Op;B)V
-}
-
-public final class net/derfruhling/serene/wasm/instruction/AnyInstructionVisitor$NestedBlock : net/derfruhling/serene/wasm/instruction/CompleteInstructionVisitor {
-	public fun <init> (Lnet/derfruhling/serene/wasm/instruction/AnyInstructionVisitor;)V
-	public fun visitBlock (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;)Lnet/derfruhling/serene/wasm/instruction/InstructionVisitor;
-	public fun visitBranchOnCast-Yuhug_o (Lnet/derfruhling/serene/wasm/instruction/Op;ILnet/derfruhling/serene/wasm/module/RefType;Lnet/derfruhling/serene/wasm/module/RefType;)V
-	public fun visitBranchTable-jXDDuk8 (Lnet/derfruhling/serene/wasm/instruction/Op;Ljava/util/List;I)V
-	public fun visitCatchTable (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;Ljava/util/List;)Lnet/derfruhling/serene/wasm/instruction/InstructionVisitor;
-	public fun visitConstF32 (Lnet/derfruhling/serene/wasm/instruction/Op;F)V
-	public fun visitConstF64 (Lnet/derfruhling/serene/wasm/instruction/Op;D)V
-	public fun visitConstI32 (Lnet/derfruhling/serene/wasm/instruction/Op;I)V
-	public fun visitConstI64 (Lnet/derfruhling/serene/wasm/instruction/Op;J)V
-	public fun visitConstV128 (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/instruction/VectorValue;)V
-	public fun visitEnd ()V
-	public fun visitIf (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;)Lnet/derfruhling/serene/wasm/instruction/IfBlockVisitor;
-	public fun visitIndex-Qn1smSk (Lnet/derfruhling/serene/wasm/instruction/Op;I)V
-	public fun visitIndices-BltQuoY (Lnet/derfruhling/serene/wasm/instruction/Op;II)V
-	public fun visitLegacyTry (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;)Lnet/derfruhling/serene/wasm/instruction/LegacyTryBlockVisitor;
-	public fun visitMemoryOp (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/instruction/MemArg;)V
-	public fun visitMemoryOpWithLane (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/instruction/MemArg;B)V
-	public fun visitSelect (Lnet/derfruhling/serene/wasm/instruction/Op;Ljava/util/List;)V
-	public fun visitSimple (Lnet/derfruhling/serene/wasm/instruction/Op;)V
-	public fun visitWithHeapType (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/HeapType;)V
-	public fun visitWithLane (Lnet/derfruhling/serene/wasm/instruction/Op;B)V
-}
-
-public final class net/derfruhling/serene/wasm/instruction/AnyInstructionVisitor$TryBlock : net/derfruhling/serene/wasm/instruction/CompleteInstructionVisitor, net/derfruhling/serene/wasm/instruction/LegacyTryBlockVisitor {
-	public fun <init> (Lnet/derfruhling/serene/wasm/instruction/AnyInstructionVisitor;)V
-	public fun visitBlock (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;)Lnet/derfruhling/serene/wasm/instruction/InstructionVisitor;
-	public fun visitBranchOnCast-Yuhug_o (Lnet/derfruhling/serene/wasm/instruction/Op;ILnet/derfruhling/serene/wasm/module/RefType;Lnet/derfruhling/serene/wasm/module/RefType;)V
-	public fun visitBranchTable-jXDDuk8 (Lnet/derfruhling/serene/wasm/instruction/Op;Ljava/util/List;I)V
-	public fun visitCatch-WZ4Q5Ns (I)Lnet/derfruhling/serene/wasm/instruction/LegacyTryBlockVisitor;
-	public fun visitCatchAll ()Lnet/derfruhling/serene/wasm/instruction/InstructionVisitor;
-	public fun visitCatchTable (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;Ljava/util/List;)Lnet/derfruhling/serene/wasm/instruction/InstructionVisitor;
-	public fun visitConstF32 (Lnet/derfruhling/serene/wasm/instruction/Op;F)V
-	public fun visitConstF64 (Lnet/derfruhling/serene/wasm/instruction/Op;D)V
-	public fun visitConstI32 (Lnet/derfruhling/serene/wasm/instruction/Op;I)V
-	public fun visitConstI64 (Lnet/derfruhling/serene/wasm/instruction/Op;J)V
-	public fun visitConstV128 (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/instruction/VectorValue;)V
-	public fun visitDelegate-WZ4Q5Ns (I)V
-	public fun visitEnd ()V
-	public fun visitIf (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;)Lnet/derfruhling/serene/wasm/instruction/IfBlockVisitor;
-	public fun visitIndex-Qn1smSk (Lnet/derfruhling/serene/wasm/instruction/Op;I)V
-	public fun visitIndices-BltQuoY (Lnet/derfruhling/serene/wasm/instruction/Op;II)V
-	public fun visitLegacyTry (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;)Lnet/derfruhling/serene/wasm/instruction/LegacyTryBlockVisitor;
-	public fun visitMemoryOp (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/instruction/MemArg;)V
-	public fun visitMemoryOpWithLane (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/instruction/MemArg;B)V
-	public fun visitSelect (Lnet/derfruhling/serene/wasm/instruction/Op;Ljava/util/List;)V
-	public fun visitSimple (Lnet/derfruhling/serene/wasm/instruction/Op;)V
-	public fun visitWithHeapType (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/HeapType;)V
-	public fun visitWithLane (Lnet/derfruhling/serene/wasm/instruction/Op;B)V
+public final class net/derfruhling/serene/wasm/instruction/AnyInstructionVisitorKt {
+	public static final fun InstructionVisitor (Lkotlin/jvm/functions/Function1;)Lnet/derfruhling/serene/wasm/instruction/InstructionVisitor;
 }
 
 public abstract interface class net/derfruhling/serene/wasm/instruction/Catch : net/derfruhling/serene/wasm/Encode {
@@ -474,10 +388,6 @@ public abstract interface class net/derfruhling/serene/wasm/instruction/Instruct
 	public abstract fun visitSimple (Lnet/derfruhling/serene/wasm/instruction/Op;)V
 	public abstract fun visitWithHeapType (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/HeapType;)V
 	public abstract fun visitWithLane (Lnet/derfruhling/serene/wasm/instruction/Op;B)V
-}
-
-public final class net/derfruhling/serene/wasm/instruction/InstructionVisitorKt {
-	public static final fun InstructionVisitor (Lkotlin/jvm/functions/Function1;)Lnet/derfruhling/serene/wasm/instruction/InstructionVisitor;
 }
 
 public final class net/derfruhling/serene/wasm/instruction/LegacyExceptionsUnsupportedException : net/derfruhling/serene/wasm/instruction/UnsupportedProposalException {
@@ -1687,17 +1597,17 @@ public final class net/derfruhling/serene/wasm/module/CompositeTypeKt {
 
 public final class net/derfruhling/serene/wasm/module/DataSegment : net/derfruhling/serene/wasm/Encode, net/derfruhling/serene/wasm/printer/Printable {
 	public static final field Companion Lnet/derfruhling/serene/wasm/module/DataSegment$Companion;
-	public synthetic fun <init> (ILkotlinx/io/bytestring/ByteString;Lkotlinx/io/bytestring/ByteString;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILnet/derfruhling/serene/wasm/CodeBlob;Lkotlinx/io/bytestring/ByteString;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public fun encode-LLqXp-g (Lkotlinx/io/Sink;)V
 	public final fun getBytes ()Lkotlinx/io/bytestring/ByteString;
 	public final fun getMemoryIndex-pVg5ArA ()I
-	public final fun getOffsetExpr-GG-f2qc ()Lkotlinx/io/bytestring/ByteString;
+	public final fun getOffsetExpr ()Lnet/derfruhling/serene/wasm/CodeBlob;
 	public fun print (Lnet/derfruhling/serene/wasm/printer/Printer;)V
 }
 
 public final class net/derfruhling/serene/wasm/module/DataSegment$Companion : net/derfruhling/serene/wasm/Decode {
-	public final fun active-FhwKsQ4 (Lkotlinx/io/bytestring/ByteString;Lkotlinx/io/bytestring/ByteString;)Lnet/derfruhling/serene/wasm/module/DataSegment;
-	public final fun active-OG0rgGU (ILkotlinx/io/bytestring/ByteString;Lkotlinx/io/bytestring/ByteString;)Lnet/derfruhling/serene/wasm/module/DataSegment;
+	public final fun active (Lnet/derfruhling/serene/wasm/CodeBlob;Lkotlinx/io/bytestring/ByteString;)Lnet/derfruhling/serene/wasm/module/DataSegment;
+	public final fun active-OzbTU-A (ILnet/derfruhling/serene/wasm/CodeBlob;Lkotlinx/io/bytestring/ByteString;)Lnet/derfruhling/serene/wasm/module/DataSegment;
 	public synthetic fun decode (Lnet/derfruhling/serene/wasm/WasmReader;)Ljava/lang/Object;
 	public fun decode (Lnet/derfruhling/serene/wasm/WasmReader;)Lnet/derfruhling/serene/wasm/module/DataSegment;
 	public fun deferredDecode (Lnet/derfruhling/serene/wasm/WasmReader;)Lnet/derfruhling/serene/wasm/DeferredDecode;
@@ -1775,13 +1685,13 @@ public abstract interface class net/derfruhling/serene/wasm/module/ElementMode {
 }
 
 public final class net/derfruhling/serene/wasm/module/ElementMode$Active : net/derfruhling/serene/wasm/module/ElementMode {
-	public synthetic fun <init> (ILkotlinx/io/bytestring/ByteString;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (ILnet/derfruhling/serene/wasm/CodeBlob;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public final fun component1-pVg5ArA ()I
-	public final fun component2-5MyoIYE ()Lkotlinx/io/bytestring/ByteString;
-	public final fun copy-VSqzmIY (ILkotlinx/io/bytestring/ByteString;)Lnet/derfruhling/serene/wasm/module/ElementMode$Active;
-	public static synthetic fun copy-VSqzmIY$default (Lnet/derfruhling/serene/wasm/module/ElementMode$Active;ILkotlinx/io/bytestring/ByteString;ILjava/lang/Object;)Lnet/derfruhling/serene/wasm/module/ElementMode$Active;
+	public final fun component2 ()Lnet/derfruhling/serene/wasm/CodeBlob;
+	public final fun copy-qim9Vi0 (ILnet/derfruhling/serene/wasm/CodeBlob;)Lnet/derfruhling/serene/wasm/module/ElementMode$Active;
+	public static synthetic fun copy-qim9Vi0$default (Lnet/derfruhling/serene/wasm/module/ElementMode$Active;ILnet/derfruhling/serene/wasm/CodeBlob;ILjava/lang/Object;)Lnet/derfruhling/serene/wasm/module/ElementMode$Active;
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getOffsetExpr-5MyoIYE ()Lkotlinx/io/bytestring/ByteString;
+	public final fun getOffsetExpr ()Lnet/derfruhling/serene/wasm/CodeBlob;
 	public final fun getTableIndex-pVg5ArA ()I
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1934,15 +1844,15 @@ public final class net/derfruhling/serene/wasm/module/FieldType : net/derfruhlin
 }
 
 public final class net/derfruhling/serene/wasm/module/FunctionCode : net/derfruhling/serene/wasm/Encode {
-	public synthetic fun <init> (Ljava/util/List;Lkotlinx/io/bytestring/ByteString;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Ljava/util/List;Lnet/derfruhling/serene/wasm/CodeBlob;)V
 	public fun <init> (Lnet/derfruhling/serene/wasm/WasmReader;)V
 	public final fun component1 ()Ljava/util/List;
-	public final fun component2-5MyoIYE ()Lkotlinx/io/bytestring/ByteString;
-	public final fun copy-FPLx4Yc (Ljava/util/List;Lkotlinx/io/bytestring/ByteString;)Lnet/derfruhling/serene/wasm/module/FunctionCode;
-	public static synthetic fun copy-FPLx4Yc$default (Lnet/derfruhling/serene/wasm/module/FunctionCode;Ljava/util/List;Lkotlinx/io/bytestring/ByteString;ILjava/lang/Object;)Lnet/derfruhling/serene/wasm/module/FunctionCode;
+	public final fun component2 ()Lnet/derfruhling/serene/wasm/CodeBlob;
+	public final fun copy (Ljava/util/List;Lnet/derfruhling/serene/wasm/CodeBlob;)Lnet/derfruhling/serene/wasm/module/FunctionCode;
+	public static synthetic fun copy$default (Lnet/derfruhling/serene/wasm/module/FunctionCode;Ljava/util/List;Lnet/derfruhling/serene/wasm/CodeBlob;ILjava/lang/Object;)Lnet/derfruhling/serene/wasm/module/FunctionCode;
 	public fun encode-LLqXp-g (Lkotlinx/io/Sink;)V
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getCode-5MyoIYE ()Lkotlinx/io/bytestring/ByteString;
+	public final fun getCode ()Lnet/derfruhling/serene/wasm/CodeBlob;
 	public final fun getLocals ()Ljava/util/List;
 	public fun hashCode ()I
 	public fun toString ()Ljava/lang/String;
@@ -1950,14 +1860,14 @@ public final class net/derfruhling/serene/wasm/module/FunctionCode : net/derfruh
 
 public final class net/derfruhling/serene/wasm/module/Global : net/derfruhling/serene/wasm/Encode, net/derfruhling/serene/wasm/printer/Printable {
 	public fun <init> (Lnet/derfruhling/serene/wasm/WasmReader;)V
-	public synthetic fun <init> (Lnet/derfruhling/serene/wasm/module/GlobalType;Lkotlinx/io/bytestring/ByteString;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lnet/derfruhling/serene/wasm/module/GlobalType;Lnet/derfruhling/serene/wasm/CodeBlob;)V
 	public final fun component1 ()Lnet/derfruhling/serene/wasm/module/GlobalType;
-	public final fun component2-5MyoIYE ()Lkotlinx/io/bytestring/ByteString;
-	public final fun copy-FPLx4Yc (Lnet/derfruhling/serene/wasm/module/GlobalType;Lkotlinx/io/bytestring/ByteString;)Lnet/derfruhling/serene/wasm/module/Global;
-	public static synthetic fun copy-FPLx4Yc$default (Lnet/derfruhling/serene/wasm/module/Global;Lnet/derfruhling/serene/wasm/module/GlobalType;Lkotlinx/io/bytestring/ByteString;ILjava/lang/Object;)Lnet/derfruhling/serene/wasm/module/Global;
+	public final fun component2 ()Lnet/derfruhling/serene/wasm/CodeBlob;
+	public final fun copy (Lnet/derfruhling/serene/wasm/module/GlobalType;Lnet/derfruhling/serene/wasm/CodeBlob;)Lnet/derfruhling/serene/wasm/module/Global;
+	public static synthetic fun copy$default (Lnet/derfruhling/serene/wasm/module/Global;Lnet/derfruhling/serene/wasm/module/GlobalType;Lnet/derfruhling/serene/wasm/CodeBlob;ILjava/lang/Object;)Lnet/derfruhling/serene/wasm/module/Global;
 	public fun encode-LLqXp-g (Lkotlinx/io/Sink;)V
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getExpr-5MyoIYE ()Lkotlinx/io/bytestring/ByteString;
+	public final fun getExpr ()Lnet/derfruhling/serene/wasm/CodeBlob;
 	public final fun getType ()Lnet/derfruhling/serene/wasm/module/GlobalType;
 	public fun hashCode ()I
 	public fun print (Lnet/derfruhling/serene/wasm/printer/Printer;)V
@@ -2467,14 +2377,14 @@ public final class net/derfruhling/serene/wasm/module/Table$Companion : net/derf
 
 public final class net/derfruhling/serene/wasm/module/Table$TableExpr : net/derfruhling/serene/wasm/module/Table {
 	public static final field Companion Lnet/derfruhling/serene/wasm/module/Table$TableExpr$Companion;
-	public synthetic fun <init> (Lnet/derfruhling/serene/wasm/module/TableType;Lkotlinx/io/bytestring/ByteString;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public fun <init> (Lnet/derfruhling/serene/wasm/module/TableType;Lnet/derfruhling/serene/wasm/CodeBlob;)V
 	public final fun component1 ()Lnet/derfruhling/serene/wasm/module/TableType;
-	public final fun component2-5MyoIYE ()Lkotlinx/io/bytestring/ByteString;
-	public final fun copy-FPLx4Yc (Lnet/derfruhling/serene/wasm/module/TableType;Lkotlinx/io/bytestring/ByteString;)Lnet/derfruhling/serene/wasm/module/Table$TableExpr;
-	public static synthetic fun copy-FPLx4Yc$default (Lnet/derfruhling/serene/wasm/module/Table$TableExpr;Lnet/derfruhling/serene/wasm/module/TableType;Lkotlinx/io/bytestring/ByteString;ILjava/lang/Object;)Lnet/derfruhling/serene/wasm/module/Table$TableExpr;
+	public final fun component2 ()Lnet/derfruhling/serene/wasm/CodeBlob;
+	public final fun copy (Lnet/derfruhling/serene/wasm/module/TableType;Lnet/derfruhling/serene/wasm/CodeBlob;)Lnet/derfruhling/serene/wasm/module/Table$TableExpr;
+	public static synthetic fun copy$default (Lnet/derfruhling/serene/wasm/module/Table$TableExpr;Lnet/derfruhling/serene/wasm/module/TableType;Lnet/derfruhling/serene/wasm/CodeBlob;ILjava/lang/Object;)Lnet/derfruhling/serene/wasm/module/Table$TableExpr;
 	public fun encode-LLqXp-g (Lkotlinx/io/Sink;)V
 	public fun equals (Ljava/lang/Object;)Z
-	public final fun getExpr-5MyoIYE ()Lkotlinx/io/bytestring/ByteString;
+	public final fun getExpr ()Lnet/derfruhling/serene/wasm/CodeBlob;
 	public fun getType ()Lnet/derfruhling/serene/wasm/module/TableType;
 	public fun hashCode ()I
 	public fun print (Lnet/derfruhling/serene/wasm/printer/Printer;)V
@@ -2602,7 +2512,7 @@ public final class net/derfruhling/serene/wasm/module/VectorType$V128 : net/derf
 	public fun toString ()Ljava/lang/String;
 }
 
-public abstract class net/derfruhling/serene/wasm/printer/AbstractExpressionFormatter : net/derfruhling/serene/wasm/instruction/InstructionVisitor, net/derfruhling/serene/wasm/instruction/LegacyExceptionsVisitor {
+public abstract class net/derfruhling/serene/wasm/printer/AbstractExpressionFormatter : net/derfruhling/serene/wasm/instruction/CompleteInstructionVisitor {
 	public fun <init> (Lnet/derfruhling/serene/wasm/printer/Printer;)V
 	protected fun appendLineCond (Lnet/derfruhling/serene/wasm/printer/Printer;)V
 	protected abstract fun appendLineCond (Lnet/derfruhling/serene/wasm/printer/Printer;Ljava/lang/String;)V
@@ -2616,80 +2526,6 @@ public abstract class net/derfruhling/serene/wasm/printer/AbstractExpressionForm
 	public fun visitConstI32 (Lnet/derfruhling/serene/wasm/instruction/Op;I)V
 	public fun visitConstI64 (Lnet/derfruhling/serene/wasm/instruction/Op;J)V
 	public fun visitConstV128 (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/instruction/VectorValue;)V
-	public fun visitIf (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;)Lnet/derfruhling/serene/wasm/instruction/IfBlockVisitor;
-	public fun visitIndex-Qn1smSk (Lnet/derfruhling/serene/wasm/instruction/Op;I)V
-	public fun visitIndices-BltQuoY (Lnet/derfruhling/serene/wasm/instruction/Op;II)V
-	public fun visitLegacyTry (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;)Lnet/derfruhling/serene/wasm/instruction/LegacyTryBlockVisitor;
-	public fun visitMemoryOp (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/instruction/MemArg;)V
-	public fun visitMemoryOpWithLane (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/instruction/MemArg;B)V
-	public fun visitSelect (Lnet/derfruhling/serene/wasm/instruction/Op;Ljava/util/List;)V
-	public fun visitSimple (Lnet/derfruhling/serene/wasm/instruction/Op;)V
-	public fun visitWithHeapType (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/HeapType;)V
-	public fun visitWithLane (Lnet/derfruhling/serene/wasm/instruction/Op;B)V
-}
-
-public final class net/derfruhling/serene/wasm/printer/AbstractExpressionFormatter$IfBlock : net/derfruhling/serene/wasm/instruction/IfBlockVisitor, net/derfruhling/serene/wasm/instruction/InstructionVisitor {
-	public fun <init> (Lnet/derfruhling/serene/wasm/printer/AbstractExpressionFormatter;)V
-	public fun visitBlock (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;)Lnet/derfruhling/serene/wasm/instruction/InstructionVisitor;
-	public fun visitBranchOnCast-Yuhug_o (Lnet/derfruhling/serene/wasm/instruction/Op;ILnet/derfruhling/serene/wasm/module/RefType;Lnet/derfruhling/serene/wasm/module/RefType;)V
-	public fun visitBranchTable-jXDDuk8 (Lnet/derfruhling/serene/wasm/instruction/Op;Ljava/util/List;I)V
-	public fun visitCatchTable (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;Ljava/util/List;)Lnet/derfruhling/serene/wasm/instruction/InstructionVisitor;
-	public fun visitConstF32 (Lnet/derfruhling/serene/wasm/instruction/Op;F)V
-	public fun visitConstF64 (Lnet/derfruhling/serene/wasm/instruction/Op;D)V
-	public fun visitConstI32 (Lnet/derfruhling/serene/wasm/instruction/Op;I)V
-	public fun visitConstI64 (Lnet/derfruhling/serene/wasm/instruction/Op;J)V
-	public fun visitConstV128 (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/instruction/VectorValue;)V
-	public fun visitElse ()Lnet/derfruhling/serene/wasm/instruction/InstructionVisitor;
-	public fun visitEnd ()V
-	public fun visitIf (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;)Lnet/derfruhling/serene/wasm/instruction/IfBlockVisitor;
-	public fun visitIndex-Qn1smSk (Lnet/derfruhling/serene/wasm/instruction/Op;I)V
-	public fun visitIndices-BltQuoY (Lnet/derfruhling/serene/wasm/instruction/Op;II)V
-	public fun visitMemoryOp (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/instruction/MemArg;)V
-	public fun visitMemoryOpWithLane (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/instruction/MemArg;B)V
-	public fun visitSelect (Lnet/derfruhling/serene/wasm/instruction/Op;Ljava/util/List;)V
-	public fun visitSimple (Lnet/derfruhling/serene/wasm/instruction/Op;)V
-	public fun visitWithHeapType (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/HeapType;)V
-	public fun visitWithLane (Lnet/derfruhling/serene/wasm/instruction/Op;B)V
-}
-
-public final class net/derfruhling/serene/wasm/printer/AbstractExpressionFormatter$LegacyTryBlock : net/derfruhling/serene/wasm/instruction/InstructionVisitor, net/derfruhling/serene/wasm/instruction/LegacyTryBlockVisitor {
-	public fun <init> (Lnet/derfruhling/serene/wasm/printer/AbstractExpressionFormatter;)V
-	public fun visitBlock (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;)Lnet/derfruhling/serene/wasm/instruction/InstructionVisitor;
-	public fun visitBranchOnCast-Yuhug_o (Lnet/derfruhling/serene/wasm/instruction/Op;ILnet/derfruhling/serene/wasm/module/RefType;Lnet/derfruhling/serene/wasm/module/RefType;)V
-	public fun visitBranchTable-jXDDuk8 (Lnet/derfruhling/serene/wasm/instruction/Op;Ljava/util/List;I)V
-	public fun visitCatch-WZ4Q5Ns (I)Lnet/derfruhling/serene/wasm/instruction/LegacyTryBlockVisitor;
-	public fun visitCatchAll ()Lnet/derfruhling/serene/wasm/instruction/InstructionVisitor;
-	public fun visitCatchTable (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;Ljava/util/List;)Lnet/derfruhling/serene/wasm/instruction/InstructionVisitor;
-	public fun visitConstF32 (Lnet/derfruhling/serene/wasm/instruction/Op;F)V
-	public fun visitConstF64 (Lnet/derfruhling/serene/wasm/instruction/Op;D)V
-	public fun visitConstI32 (Lnet/derfruhling/serene/wasm/instruction/Op;I)V
-	public fun visitConstI64 (Lnet/derfruhling/serene/wasm/instruction/Op;J)V
-	public fun visitConstV128 (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/instruction/VectorValue;)V
-	public fun visitDelegate-WZ4Q5Ns (I)V
-	public fun visitEnd ()V
-	public fun visitIf (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;)Lnet/derfruhling/serene/wasm/instruction/IfBlockVisitor;
-	public fun visitIndex-Qn1smSk (Lnet/derfruhling/serene/wasm/instruction/Op;I)V
-	public fun visitIndices-BltQuoY (Lnet/derfruhling/serene/wasm/instruction/Op;II)V
-	public fun visitMemoryOp (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/instruction/MemArg;)V
-	public fun visitMemoryOpWithLane (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/instruction/MemArg;B)V
-	public fun visitSelect (Lnet/derfruhling/serene/wasm/instruction/Op;Ljava/util/List;)V
-	public fun visitSimple (Lnet/derfruhling/serene/wasm/instruction/Op;)V
-	public fun visitWithHeapType (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/HeapType;)V
-	public fun visitWithLane (Lnet/derfruhling/serene/wasm/instruction/Op;B)V
-}
-
-public final class net/derfruhling/serene/wasm/printer/AbstractExpressionFormatter$NestedBlock : net/derfruhling/serene/wasm/instruction/InstructionVisitor {
-	public fun <init> (Lnet/derfruhling/serene/wasm/printer/AbstractExpressionFormatter;)V
-	public fun visitBlock (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;)Lnet/derfruhling/serene/wasm/instruction/InstructionVisitor;
-	public fun visitBranchOnCast-Yuhug_o (Lnet/derfruhling/serene/wasm/instruction/Op;ILnet/derfruhling/serene/wasm/module/RefType;Lnet/derfruhling/serene/wasm/module/RefType;)V
-	public fun visitBranchTable-jXDDuk8 (Lnet/derfruhling/serene/wasm/instruction/Op;Ljava/util/List;I)V
-	public fun visitCatchTable (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;Ljava/util/List;)Lnet/derfruhling/serene/wasm/instruction/InstructionVisitor;
-	public fun visitConstF32 (Lnet/derfruhling/serene/wasm/instruction/Op;F)V
-	public fun visitConstF64 (Lnet/derfruhling/serene/wasm/instruction/Op;D)V
-	public fun visitConstI32 (Lnet/derfruhling/serene/wasm/instruction/Op;I)V
-	public fun visitConstI64 (Lnet/derfruhling/serene/wasm/instruction/Op;J)V
-	public fun visitConstV128 (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/instruction/VectorValue;)V
-	public fun visitEnd ()V
 	public fun visitIf (Lnet/derfruhling/serene/wasm/instruction/Op;Lnet/derfruhling/serene/wasm/module/BlockType;)Lnet/derfruhling/serene/wasm/instruction/IfBlockVisitor;
 	public fun visitIndex-Qn1smSk (Lnet/derfruhling/serene/wasm/instruction/Op;I)V
 	public fun visitIndices-BltQuoY (Lnet/derfruhling/serene/wasm/instruction/Op;II)V
@@ -2847,16 +2683,13 @@ public final class net/derfruhling/serene/wasm/printer/Printer$DefaultImpls {
 	public static fun endInlineExprBlock (Lnet/derfruhling/serene/wasm/printer/Printer;)V
 }
 
-public final class net/derfruhling/serene/wasm/printer/PrinterExtKt {
+public final class net/derfruhling/serene/wasm/printer/PrinterKt {
 	public static final fun identWord (Lnet/derfruhling/serene/wasm/printer/Printer;Ljava/lang/String;)V
+	public static final fun printer (Ljava/lang/Appendable;)Lnet/derfruhling/serene/wasm/printer/Printer;
 	public static final fun string (Lnet/derfruhling/serene/wasm/printer/Printer;Ljava/lang/String;)V
 	public static final fun string (Lnet/derfruhling/serene/wasm/printer/Printer;Lkotlinx/io/bytestring/ByteString;)V
 	public static final fun string (Lnet/derfruhling/serene/wasm/printer/Printer;[B)V
 	public static final fun toIdentWord (Ljava/lang/String;)Ljava/lang/String;
-}
-
-public final class net/derfruhling/serene/wasm/printer/PrinterKt {
-	public static final fun printer (Ljava/lang/Appendable;)Lnet/derfruhling/serene/wasm/printer/Printer;
 }
 
 public final class net/derfruhling/serene/wasm/printer/SimplePrinterVisitor : net/derfruhling/serene/wasm/AbstractModuleVisitor {
@@ -3064,6 +2897,61 @@ public final class net/derfruhling/serene/wasm/sections/MemorySection : net/derf
 
 public final class net/derfruhling/serene/wasm/sections/MemorySection$Companion {
 	public final fun getEMPTY ()Lnet/derfruhling/serene/wasm/sections/MemorySection;
+}
+
+public class net/derfruhling/serene/wasm/sections/NameSection : net/derfruhling/serene/wasm/sections/CustomSection {
+	public static final field Companion Lnet/derfruhling/serene/wasm/sections/NameSection$Companion;
+	public fun <init> (Lnet/derfruhling/serene/wasm/sections/NameSection$Builder;)V
+	protected fun encodeCustom-LLqXp-g (Lkotlinx/io/Sink;)V
+	public final fun getFieldNames ()Ljava/util/Map;
+	public final fun getFunctionNames ()Ljava/util/Map;
+	public final fun getLocalNames ()Ljava/util/Map;
+	public final fun getModuleName ()Ljava/lang/String;
+	public final fun getTagNames ()Ljava/util/Map;
+	public final fun getTypeNames ()Ljava/util/Map;
+}
+
+public class net/derfruhling/serene/wasm/sections/NameSection$Builder {
+	public fun <init> ()V
+	public final fun fields-qim9Vi0 (ILkotlin/jvm/functions/Function1;)V
+	public final fun function-qim9Vi0 (ILjava/lang/String;)V
+	public final fun functionLocals-qim9Vi0 (ILkotlin/jvm/functions/Function1;)V
+	public final fun module (Ljava/lang/String;)V
+	public final fun tag-qim9Vi0 (ILjava/lang/String;)V
+	public final fun type-qim9Vi0 (ILjava/lang/String;)V
+}
+
+public final class net/derfruhling/serene/wasm/sections/NameSection$Builder$FieldBuilder {
+	public static final synthetic fun box-impl (Ljava/util/Map;)Lnet/derfruhling/serene/wasm/sections/NameSection$Builder$FieldBuilder;
+	public fun equals (Ljava/lang/Object;)Z
+	public static fun equals-impl (Ljava/util/Map;Ljava/lang/Object;)Z
+	public static final fun equals-impl0 (Ljava/util/Map;Ljava/util/Map;)Z
+	public static final fun field-qim9Vi0 (Ljava/util/Map;ILjava/lang/String;)V
+	public fun hashCode ()I
+	public static fun hashCode-impl (Ljava/util/Map;)I
+	public fun toString ()Ljava/lang/String;
+	public static fun toString-impl (Ljava/util/Map;)Ljava/lang/String;
+	public final synthetic fun unbox-impl ()Ljava/util/Map;
+}
+
+public final class net/derfruhling/serene/wasm/sections/NameSection$Builder$LocalBuilder {
+	public static final synthetic fun box-impl (Ljava/util/Map;)Lnet/derfruhling/serene/wasm/sections/NameSection$Builder$LocalBuilder;
+	public fun equals (Ljava/lang/Object;)Z
+	public static fun equals-impl (Ljava/util/Map;Ljava/lang/Object;)Z
+	public static final fun equals-impl0 (Ljava/util/Map;Ljava/util/Map;)Z
+	public fun hashCode ()I
+	public static fun hashCode-impl (Ljava/util/Map;)I
+	public static final fun param-qim9Vi0 (Ljava/util/Map;ILjava/lang/String;)V
+	public fun toString ()Ljava/lang/String;
+	public static fun toString-impl (Ljava/util/Map;)Ljava/lang/String;
+	public final synthetic fun unbox-impl ()Ljava/util/Map;
+}
+
+public final class net/derfruhling/serene/wasm/sections/NameSection$Companion : net/derfruhling/serene/wasm/sections/CustomSection$Factory {
+	public final fun build (Lkotlin/jvm/functions/Function1;)Lnet/derfruhling/serene/wasm/sections/NameSection;
+	public final fun getLogger ()Lio/github/oshai/kotlinlogging/KLogger;
+	public synthetic fun parseFrom (Lnet/derfruhling/serene/wasm/WasmReader;)Lnet/derfruhling/serene/wasm/sections/CustomSection;
+	public fun parseFrom (Lnet/derfruhling/serene/wasm/WasmReader;)Lnet/derfruhling/serene/wasm/sections/NameSection;
 }
 
 public abstract interface class net/derfruhling/serene/wasm/sections/Section : net/derfruhling/serene/wasm/Encode {

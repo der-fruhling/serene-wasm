@@ -6,19 +6,18 @@ import kotlinx.io.write
 import net.derfruhling.serene.wasm.instruction.InstructionVisitor
 import kotlin.jvm.JvmInline
 
-private class CodeBlobIsMultiInstruction : RuntimeException()
-
-@JvmInline
-value class CodeBlob(val byteString: ByteString) {
+class CodeBlob(val byteString: ByteString) {
     fun visit(visitor: InstructionVisitor) {
         WasmReader(Buffer().also { it.write(byteString) }).visitExpr(visitor)
     }
 
-    fun isSimpleInlineExpr(): Boolean {
-        return try {
+    private class CodeBlobIsMultiInstruction : RuntimeException()
+
+    val isSimpleInlineExpr: Boolean by lazy {
+        try {
             var once = false
             visit(InstructionVisitor {
-                if(!once) {
+                if (!once) {
                     once = true
                 } else {
                     throw CodeBlobIsMultiInstruction()

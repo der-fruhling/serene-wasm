@@ -8,58 +8,48 @@ import net.derfruhling.serene.wasm.instruction.UnknownInstructionException
 import net.derfruhling.serene.wasm.instruction.WasmWriterInstructionVisitor
 import net.derfruhling.serene.wasm.module.InvalidModuleDataException
 import kotlin.experimental.and
-import kotlin.reflect.KProperty
-
-class PositionKeeper private constructor(var position: Long) {
-    constructor() : this(0)
-
-    fun inherit() = PositionKeeper(position)
-
-    operator fun getValue(self: Any?, property: KProperty<*>): Long {
-        return position
-    }
-
-    operator fun setValue(self: Any?, property: KProperty<*>, value: Long) {
-        require(value >= position)
-        position = value
-    }
-}
 
 class WasmReader(private val source: Source, internal val keeper: PositionKeeper = PositionKeeper()) {
     constructor(rawSource: RawSource) : this(rawSource.buffered())
     constructor(bytes: ByteArray) : this(Buffer().also { it.write(bytes) })
 
-    var bytesRead by keeper
+    var position by keeper
     val isExhausted
         get() = source.exhausted()
 
     fun advanceTo(other: WasmReader) {
-        require(other.keeper.position >= this.keeper.position)
-        source.skip(other.keeper.position - this.keeper.position)
-        this.keeper.position = other.keeper.position
+        require(other.position >= this.position)
+        source.skip(other.position - this.position)
+        this.position = other.position
     }
 
     fun peek() = WasmReader(source.peek(), keeper.inherit())
 
+    @Throws(EOFException::class)
     fun readByte(): Byte {
-        bytesRead++
+        position++
         return source.readByte()
     }
 
     fun consume(): ByteString {
-        return source.readByteString().also { bytesRead += it.size }
+        return source.readByteString().also { position += it.size }
     }
 
+    @Throws(EOFException::class)
     fun readBytes(length: Long): Buffer {
         val buffer = Buffer()
         source.readTo(buffer, length)
-        bytesRead += length
+        position += length
         return buffer
     }
 
+    @Throws(EOFException::class)
     fun readBytes(length: Int) = readBytes(length.toLong())
+
+    @Throws(EOFException::class)
     fun readBytes(length: UInt) = readBytes(length.toLong())
 
+    @Throws(EOFException::class)
     inline fun readUntil(condition: (Byte) -> Boolean): Buffer {
         val buffer = Buffer()
 
@@ -72,6 +62,7 @@ class WasmReader(private val source: Source, internal val keeper: PositionKeeper
     }
 
     @PublishedApi
+    @Throws(EOFException::class)
     internal inline fun <T> commonGenericIntRead(initial: T, accum: (T, Byte, Int) -> T): Triple<T, Int, Byte> {
         var value = initial
         val bytes = readUntil { !it.hasBit(7) }
@@ -86,11 +77,13 @@ class WasmReader(private val source: Source, internal val keeper: PositionKeeper
         return Triple(value, offset, byte)
     }
 
+    @Throws(EOFException::class)
     inline fun <T> readGenericInt(initial: T, accum: (T, Byte, Int) -> T): T {
         val (value) = commonGenericIntRead(initial, accum)
         return value
     }
 
+    @Throws(EOFException::class)
     inline fun <T> readGenericSignedInt(initial: T, signExtend: (T, Int) -> T, accum: (T, Byte, Int) -> T): T {
         val (value, offset, byte) = commonGenericIntRead(initial, accum)
         return if (byte.hasBit(6)) {
@@ -100,16 +93,19 @@ class WasmReader(private val source: Source, internal val keeper: PositionKeeper
         }
     }
 
+    @Throws(EOFException::class)
     fun readUInt() = readGenericInt(0u) { acc, byte, off ->
         if(off > 32) throw InvalidModuleDataException("ULEB128 integer too long")
         acc or (byte.toUInt() shl off)
     }
 
+    @Throws(EOFException::class)
     fun readULong() = readGenericInt(0uL) { acc, byte, off ->
         if(off > 64) throw InvalidModuleDataException("ULEB128 integer too long")
         acc or (byte.toULong() shl off)
     }
 
+    @Throws(EOFException::class)
     fun readInt() = readGenericSignedInt(0, { v, off ->
         // sign extension
         if(off < 32) v or (0.inv() shl off) else v
@@ -118,6 +114,7 @@ class WasmReader(private val source: Source, internal val keeper: PositionKeeper
         acc or (byte.toInt() shl off)
     }
 
+    @Throws(EOFException::class)
     fun readLong() = readGenericSignedInt(0L, { v, off ->
         // sign extension
         if(off < 64) v or (0L.inv() shl off) else v
@@ -126,46 +123,25 @@ class WasmReader(private val source: Source, internal val keeper: PositionKeeper
         acc or (byte.toLong() shl off)
     }
 
-    fun readStaticUShort(): UShort {
-        bytesRead += 2
-        return source.readUShortLe()
-    }
-
+    @Throws(EOFException::class)
     fun readStaticUInt(): UInt {
-        bytesRead += 4
+        position += 4
         return source.readUIntLe()
     }
 
-    fun readStaticULong(): ULong {
-        bytesRead += 8
-        return source.readULongLe()
-    }
-
-    fun readStaticShort(): Short {
-        bytesRead += 2
-        return source.readShortLe()
-    }
-
-    fun readStaticInt(): Int {
-        bytesRead += 4
-        return source.readIntLe()
-    }
-
-    fun readStaticLong(): Long {
-        bytesRead += 8
-        return source.readLongLe()
-    }
-
+    @Throws(EOFException::class)
     fun readFloat(): Float {
-        bytesRead += 4
+        position += 4
         return source.readFloatLe()
     }
 
+    @Throws(EOFException::class)
     fun readDouble(): Double {
-        bytesRead += 8
+        position += 8
         return source.readDoubleLe()
     }
 
+    @Throws(EOFException::class)
     fun readString(): String {
         val byteCount = readUInt()
         val bytes = readBytes(byteCount)
@@ -173,10 +149,12 @@ class WasmReader(private val source: Source, internal val keeper: PositionKeeper
         return bytes.readString()
     }
 
+    @Throws(EOFException::class)
     fun <T> readList(fn: (WasmReader) -> T): List<T> {
         return List(readUInt().toInt()) { fn(this) }
     }
 
+    @Throws(EOFException::class, UnknownInstructionException::class)
     fun readExpr(): CodeBlob {
         val buffer = Buffer()
         val writerVisitor = WasmWriterInstructionVisitor(WasmWriter(buffer))
@@ -184,6 +162,7 @@ class WasmReader(private val source: Source, internal val keeper: PositionKeeper
         return CodeBlob(buffer.readByteString())
     }
 
+    @Throws(EOFException::class, UnknownInstructionException::class)
     fun visitExpr(writerVisitor: InstructionVisitor) {
         try {
             var currentVisitor: InstructionVisitor = writerVisitor
@@ -212,6 +191,7 @@ class WasmReader(private val source: Source, internal val keeper: PositionKeeper
         }
     }
 
+    @Throws(EOFException::class, UnknownInstructionException::class)
     fun readOp(): Op {
         val opByte = readByte().toUByte()
         return if(opByte in Op.extRange) {
@@ -226,5 +206,6 @@ class WasmReader(private val source: Source, internal val keeper: PositionKeeper
         }
     }
 
+    @Throws(EOFException::class)
     fun readMagicUInt(): UInt = source.readUInt()
 }

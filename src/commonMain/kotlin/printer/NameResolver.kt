@@ -1,8 +1,9 @@
 package net.derfruhling.serene.wasm.printer
 
-import net.derfruhling.serene.wasm.module.CompositeType
+import net.derfruhling.serene.wasm.UnstablePublicApi
 import net.derfruhling.serene.wasm.module.Type
 
+@SubclassOptInRequired(UnstablePublicApi::class)
 interface NameResolver {
     fun resolveNameOptional(ns: Namespace, index: UInt): String? = null
 

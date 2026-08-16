@@ -1,8 +1,8 @@
 package net.derfruhling.serene.wasm.printer
 
-class ExpressionFormatter(out: Printer) : AbstractExpressionFormatter(out) {
+class FunctionCodeFormatter(out: Printer) : AbstractExpressionFormatter(out) {
     init {
-        out.beginExprBlock()
+        out.beginInlineExprBlock()
     }
 
     override fun Printer.appendLineCond(string: String) {
@@ -14,7 +14,6 @@ class ExpressionFormatter(out: Printer) : AbstractExpressionFormatter(out) {
     }
 
     override fun visitEnd() {
-        out.endExprBlock()
+        out.endInlineExprBlock()
     }
 }
-

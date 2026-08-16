@@ -42,6 +42,10 @@ open annotation class net.derfruhling.serene.wasm.instruction/OpContract : kotli
     }
 }
 
+open annotation class net.derfruhling.serene.wasm/UnstablePublicApi : kotlin/Annotation { // net.derfruhling.serene.wasm/UnstablePublicApi|null[0]
+    constructor <init>() // net.derfruhling.serene.wasm/UnstablePublicApi.<init>|<init>(){}[0]
+}
+
 abstract enum class net.derfruhling.serene.wasm.instruction/OpType : kotlin/Enum<net.derfruhling.serene.wasm.instruction/OpType> { // net.derfruhling.serene.wasm.instruction/OpType|null[0]
     enum entry BLOCK_CONTROL // net.derfruhling.serene.wasm.instruction/OpType.BLOCK_CONTROL|null[0]
     enum entry BLOCK_IF // net.derfruhling.serene.wasm.instruction/OpType.BLOCK_IF|null[0]
@@ -1926,95 +1930,15 @@ abstract class net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor : n
     open fun visitIf(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType): net.derfruhling.serene.wasm.instruction/IfBlockVisitor // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.visitIf|visitIf(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType){}[0]
     open fun visitIndex(net.derfruhling.serene.wasm.instruction/Op, kotlin/UInt) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.visitIndex|visitIndex(net.derfruhling.serene.wasm.instruction.Op;kotlin.UInt){}[0]
     open fun visitIndices(net.derfruhling.serene.wasm.instruction/Op, kotlin/UInt, kotlin/UInt) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.visitIndices|visitIndices(net.derfruhling.serene.wasm.instruction.Op;kotlin.UInt;kotlin.UInt){}[0]
-    open fun visitLegacyTry(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType): net.derfruhling.serene.wasm.instruction/LegacyTryBlockVisitor // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.visitLegacyTry|visitLegacyTry(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType){}[0]
     open fun visitMemoryOp(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.instruction/MemArg) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.visitMemoryOp|visitMemoryOp(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.instruction.MemArg){}[0]
     open fun visitMemoryOpWithLane(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.instruction/MemArg, kotlin/Byte) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.visitMemoryOpWithLane|visitMemoryOpWithLane(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.instruction.MemArg;kotlin.Byte){}[0]
     open fun visitSelect(net.derfruhling.serene.wasm.instruction/Op, kotlin.collections/List<net.derfruhling.serene.wasm.module/ValueType>) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.visitSelect|visitSelect(net.derfruhling.serene.wasm.instruction.Op;kotlin.collections.List<net.derfruhling.serene.wasm.module.ValueType>){}[0]
     open fun visitSimple(net.derfruhling.serene.wasm.instruction/Op) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.visitSimple|visitSimple(net.derfruhling.serene.wasm.instruction.Op){}[0]
     open fun visitWithHeapType(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/HeapType) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.visitWithHeapType|visitWithHeapType(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.HeapType){}[0]
     open fun visitWithLane(net.derfruhling.serene.wasm.instruction/Op, kotlin/Byte) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.visitWithLane|visitWithLane(net.derfruhling.serene.wasm.instruction.Op;kotlin.Byte){}[0]
-
-    final inner class IfBlock : net.derfruhling.serene.wasm.instruction/CompleteInstructionVisitor, net.derfruhling.serene.wasm.instruction/IfBlockVisitor { // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.IfBlock|null[0]
-        constructor <init>() // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.IfBlock.<init>|<init>(){}[0]
-
-        final fun visitBlock(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType): net.derfruhling.serene.wasm.instruction/InstructionVisitor // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.IfBlock.visitBlock|visitBlock(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType){}[0]
-        final fun visitBranchOnCast(net.derfruhling.serene.wasm.instruction/Op, kotlin/UInt, net.derfruhling.serene.wasm.module/RefType, net.derfruhling.serene.wasm.module/RefType) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.IfBlock.visitBranchOnCast|visitBranchOnCast(net.derfruhling.serene.wasm.instruction.Op;kotlin.UInt;net.derfruhling.serene.wasm.module.RefType;net.derfruhling.serene.wasm.module.RefType){}[0]
-        final fun visitBranchTable(net.derfruhling.serene.wasm.instruction/Op, kotlin.collections/List<kotlin/UInt>, kotlin/UInt) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.IfBlock.visitBranchTable|visitBranchTable(net.derfruhling.serene.wasm.instruction.Op;kotlin.collections.List<kotlin.UInt>;kotlin.UInt){}[0]
-        final fun visitCatchTable(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType, kotlin.collections/List<net.derfruhling.serene.wasm.instruction/Catch>): net.derfruhling.serene.wasm.instruction/InstructionVisitor // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.IfBlock.visitCatchTable|visitCatchTable(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType;kotlin.collections.List<net.derfruhling.serene.wasm.instruction.Catch>){}[0]
-        final fun visitConstF32(net.derfruhling.serene.wasm.instruction/Op, kotlin/Float) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.IfBlock.visitConstF32|visitConstF32(net.derfruhling.serene.wasm.instruction.Op;kotlin.Float){}[0]
-        final fun visitConstF64(net.derfruhling.serene.wasm.instruction/Op, kotlin/Double) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.IfBlock.visitConstF64|visitConstF64(net.derfruhling.serene.wasm.instruction.Op;kotlin.Double){}[0]
-        final fun visitConstI32(net.derfruhling.serene.wasm.instruction/Op, kotlin/Int) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.IfBlock.visitConstI32|visitConstI32(net.derfruhling.serene.wasm.instruction.Op;kotlin.Int){}[0]
-        final fun visitConstI64(net.derfruhling.serene.wasm.instruction/Op, kotlin/Long) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.IfBlock.visitConstI64|visitConstI64(net.derfruhling.serene.wasm.instruction.Op;kotlin.Long){}[0]
-        final fun visitConstV128(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.instruction/VectorValue) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.IfBlock.visitConstV128|visitConstV128(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.instruction.VectorValue){}[0]
-        final fun visitElse(): net.derfruhling.serene.wasm.instruction/InstructionVisitor // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.IfBlock.visitElse|visitElse(){}[0]
-        final fun visitEnd() // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.IfBlock.visitEnd|visitEnd(){}[0]
-        final fun visitIf(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType): net.derfruhling.serene.wasm.instruction/IfBlockVisitor // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.IfBlock.visitIf|visitIf(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType){}[0]
-        final fun visitIndex(net.derfruhling.serene.wasm.instruction/Op, kotlin/UInt) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.IfBlock.visitIndex|visitIndex(net.derfruhling.serene.wasm.instruction.Op;kotlin.UInt){}[0]
-        final fun visitIndices(net.derfruhling.serene.wasm.instruction/Op, kotlin/UInt, kotlin/UInt) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.IfBlock.visitIndices|visitIndices(net.derfruhling.serene.wasm.instruction.Op;kotlin.UInt;kotlin.UInt){}[0]
-        final fun visitLegacyTry(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType): net.derfruhling.serene.wasm.instruction/LegacyTryBlockVisitor // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.IfBlock.visitLegacyTry|visitLegacyTry(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType){}[0]
-        final fun visitMemoryOp(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.instruction/MemArg) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.IfBlock.visitMemoryOp|visitMemoryOp(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.instruction.MemArg){}[0]
-        final fun visitMemoryOpWithLane(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.instruction/MemArg, kotlin/Byte) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.IfBlock.visitMemoryOpWithLane|visitMemoryOpWithLane(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.instruction.MemArg;kotlin.Byte){}[0]
-        final fun visitSelect(net.derfruhling.serene.wasm.instruction/Op, kotlin.collections/List<net.derfruhling.serene.wasm.module/ValueType>) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.IfBlock.visitSelect|visitSelect(net.derfruhling.serene.wasm.instruction.Op;kotlin.collections.List<net.derfruhling.serene.wasm.module.ValueType>){}[0]
-        final fun visitSimple(net.derfruhling.serene.wasm.instruction/Op) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.IfBlock.visitSimple|visitSimple(net.derfruhling.serene.wasm.instruction.Op){}[0]
-        final fun visitWithHeapType(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/HeapType) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.IfBlock.visitWithHeapType|visitWithHeapType(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.HeapType){}[0]
-        final fun visitWithLane(net.derfruhling.serene.wasm.instruction/Op, kotlin/Byte) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.IfBlock.visitWithLane|visitWithLane(net.derfruhling.serene.wasm.instruction.Op;kotlin.Byte){}[0]
-    }
-
-    final inner class NestedBlock : net.derfruhling.serene.wasm.instruction/CompleteInstructionVisitor { // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.NestedBlock|null[0]
-        constructor <init>() // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.NestedBlock.<init>|<init>(){}[0]
-
-        final fun visitBlock(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType): net.derfruhling.serene.wasm.instruction/InstructionVisitor // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.NestedBlock.visitBlock|visitBlock(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType){}[0]
-        final fun visitBranchOnCast(net.derfruhling.serene.wasm.instruction/Op, kotlin/UInt, net.derfruhling.serene.wasm.module/RefType, net.derfruhling.serene.wasm.module/RefType) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.NestedBlock.visitBranchOnCast|visitBranchOnCast(net.derfruhling.serene.wasm.instruction.Op;kotlin.UInt;net.derfruhling.serene.wasm.module.RefType;net.derfruhling.serene.wasm.module.RefType){}[0]
-        final fun visitBranchTable(net.derfruhling.serene.wasm.instruction/Op, kotlin.collections/List<kotlin/UInt>, kotlin/UInt) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.NestedBlock.visitBranchTable|visitBranchTable(net.derfruhling.serene.wasm.instruction.Op;kotlin.collections.List<kotlin.UInt>;kotlin.UInt){}[0]
-        final fun visitCatchTable(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType, kotlin.collections/List<net.derfruhling.serene.wasm.instruction/Catch>): net.derfruhling.serene.wasm.instruction/InstructionVisitor // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.NestedBlock.visitCatchTable|visitCatchTable(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType;kotlin.collections.List<net.derfruhling.serene.wasm.instruction.Catch>){}[0]
-        final fun visitConstF32(net.derfruhling.serene.wasm.instruction/Op, kotlin/Float) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.NestedBlock.visitConstF32|visitConstF32(net.derfruhling.serene.wasm.instruction.Op;kotlin.Float){}[0]
-        final fun visitConstF64(net.derfruhling.serene.wasm.instruction/Op, kotlin/Double) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.NestedBlock.visitConstF64|visitConstF64(net.derfruhling.serene.wasm.instruction.Op;kotlin.Double){}[0]
-        final fun visitConstI32(net.derfruhling.serene.wasm.instruction/Op, kotlin/Int) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.NestedBlock.visitConstI32|visitConstI32(net.derfruhling.serene.wasm.instruction.Op;kotlin.Int){}[0]
-        final fun visitConstI64(net.derfruhling.serene.wasm.instruction/Op, kotlin/Long) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.NestedBlock.visitConstI64|visitConstI64(net.derfruhling.serene.wasm.instruction.Op;kotlin.Long){}[0]
-        final fun visitConstV128(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.instruction/VectorValue) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.NestedBlock.visitConstV128|visitConstV128(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.instruction.VectorValue){}[0]
-        final fun visitEnd() // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.NestedBlock.visitEnd|visitEnd(){}[0]
-        final fun visitIf(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType): net.derfruhling.serene.wasm.instruction/IfBlockVisitor // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.NestedBlock.visitIf|visitIf(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType){}[0]
-        final fun visitIndex(net.derfruhling.serene.wasm.instruction/Op, kotlin/UInt) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.NestedBlock.visitIndex|visitIndex(net.derfruhling.serene.wasm.instruction.Op;kotlin.UInt){}[0]
-        final fun visitIndices(net.derfruhling.serene.wasm.instruction/Op, kotlin/UInt, kotlin/UInt) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.NestedBlock.visitIndices|visitIndices(net.derfruhling.serene.wasm.instruction.Op;kotlin.UInt;kotlin.UInt){}[0]
-        final fun visitLegacyTry(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType): net.derfruhling.serene.wasm.instruction/LegacyTryBlockVisitor // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.NestedBlock.visitLegacyTry|visitLegacyTry(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType){}[0]
-        final fun visitMemoryOp(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.instruction/MemArg) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.NestedBlock.visitMemoryOp|visitMemoryOp(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.instruction.MemArg){}[0]
-        final fun visitMemoryOpWithLane(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.instruction/MemArg, kotlin/Byte) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.NestedBlock.visitMemoryOpWithLane|visitMemoryOpWithLane(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.instruction.MemArg;kotlin.Byte){}[0]
-        final fun visitSelect(net.derfruhling.serene.wasm.instruction/Op, kotlin.collections/List<net.derfruhling.serene.wasm.module/ValueType>) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.NestedBlock.visitSelect|visitSelect(net.derfruhling.serene.wasm.instruction.Op;kotlin.collections.List<net.derfruhling.serene.wasm.module.ValueType>){}[0]
-        final fun visitSimple(net.derfruhling.serene.wasm.instruction/Op) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.NestedBlock.visitSimple|visitSimple(net.derfruhling.serene.wasm.instruction.Op){}[0]
-        final fun visitWithHeapType(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/HeapType) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.NestedBlock.visitWithHeapType|visitWithHeapType(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.HeapType){}[0]
-        final fun visitWithLane(net.derfruhling.serene.wasm.instruction/Op, kotlin/Byte) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.NestedBlock.visitWithLane|visitWithLane(net.derfruhling.serene.wasm.instruction.Op;kotlin.Byte){}[0]
-    }
-
-    final inner class TryBlock : net.derfruhling.serene.wasm.instruction/CompleteInstructionVisitor, net.derfruhling.serene.wasm.instruction/LegacyTryBlockVisitor { // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock|null[0]
-        constructor <init>() // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock.<init>|<init>(){}[0]
-
-        final fun visitBlock(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType): net.derfruhling.serene.wasm.instruction/InstructionVisitor // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock.visitBlock|visitBlock(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType){}[0]
-        final fun visitBranchOnCast(net.derfruhling.serene.wasm.instruction/Op, kotlin/UInt, net.derfruhling.serene.wasm.module/RefType, net.derfruhling.serene.wasm.module/RefType) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock.visitBranchOnCast|visitBranchOnCast(net.derfruhling.serene.wasm.instruction.Op;kotlin.UInt;net.derfruhling.serene.wasm.module.RefType;net.derfruhling.serene.wasm.module.RefType){}[0]
-        final fun visitBranchTable(net.derfruhling.serene.wasm.instruction/Op, kotlin.collections/List<kotlin/UInt>, kotlin/UInt) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock.visitBranchTable|visitBranchTable(net.derfruhling.serene.wasm.instruction.Op;kotlin.collections.List<kotlin.UInt>;kotlin.UInt){}[0]
-        final fun visitCatch(kotlin/UInt): net.derfruhling.serene.wasm.instruction/LegacyTryBlockVisitor // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock.visitCatch|visitCatch(kotlin.UInt){}[0]
-        final fun visitCatchAll(): net.derfruhling.serene.wasm.instruction/InstructionVisitor // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock.visitCatchAll|visitCatchAll(){}[0]
-        final fun visitCatchTable(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType, kotlin.collections/List<net.derfruhling.serene.wasm.instruction/Catch>): net.derfruhling.serene.wasm.instruction/InstructionVisitor // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock.visitCatchTable|visitCatchTable(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType;kotlin.collections.List<net.derfruhling.serene.wasm.instruction.Catch>){}[0]
-        final fun visitConstF32(net.derfruhling.serene.wasm.instruction/Op, kotlin/Float) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock.visitConstF32|visitConstF32(net.derfruhling.serene.wasm.instruction.Op;kotlin.Float){}[0]
-        final fun visitConstF64(net.derfruhling.serene.wasm.instruction/Op, kotlin/Double) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock.visitConstF64|visitConstF64(net.derfruhling.serene.wasm.instruction.Op;kotlin.Double){}[0]
-        final fun visitConstI32(net.derfruhling.serene.wasm.instruction/Op, kotlin/Int) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock.visitConstI32|visitConstI32(net.derfruhling.serene.wasm.instruction.Op;kotlin.Int){}[0]
-        final fun visitConstI64(net.derfruhling.serene.wasm.instruction/Op, kotlin/Long) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock.visitConstI64|visitConstI64(net.derfruhling.serene.wasm.instruction.Op;kotlin.Long){}[0]
-        final fun visitConstV128(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.instruction/VectorValue) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock.visitConstV128|visitConstV128(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.instruction.VectorValue){}[0]
-        final fun visitDelegate(kotlin/UInt) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock.visitDelegate|visitDelegate(kotlin.UInt){}[0]
-        final fun visitEnd() // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock.visitEnd|visitEnd(){}[0]
-        final fun visitIf(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType): net.derfruhling.serene.wasm.instruction/IfBlockVisitor // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock.visitIf|visitIf(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType){}[0]
-        final fun visitIndex(net.derfruhling.serene.wasm.instruction/Op, kotlin/UInt) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock.visitIndex|visitIndex(net.derfruhling.serene.wasm.instruction.Op;kotlin.UInt){}[0]
-        final fun visitIndices(net.derfruhling.serene.wasm.instruction/Op, kotlin/UInt, kotlin/UInt) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock.visitIndices|visitIndices(net.derfruhling.serene.wasm.instruction.Op;kotlin.UInt;kotlin.UInt){}[0]
-        final fun visitLegacyTry(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType): net.derfruhling.serene.wasm.instruction/LegacyTryBlockVisitor // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock.visitLegacyTry|visitLegacyTry(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType){}[0]
-        final fun visitMemoryOp(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.instruction/MemArg) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock.visitMemoryOp|visitMemoryOp(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.instruction.MemArg){}[0]
-        final fun visitMemoryOpWithLane(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.instruction/MemArg, kotlin/Byte) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock.visitMemoryOpWithLane|visitMemoryOpWithLane(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.instruction.MemArg;kotlin.Byte){}[0]
-        final fun visitSelect(net.derfruhling.serene.wasm.instruction/Op, kotlin.collections/List<net.derfruhling.serene.wasm.module/ValueType>) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock.visitSelect|visitSelect(net.derfruhling.serene.wasm.instruction.Op;kotlin.collections.List<net.derfruhling.serene.wasm.module.ValueType>){}[0]
-        final fun visitSimple(net.derfruhling.serene.wasm.instruction/Op) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock.visitSimple|visitSimple(net.derfruhling.serene.wasm.instruction.Op){}[0]
-        final fun visitWithHeapType(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/HeapType) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock.visitWithHeapType|visitWithHeapType(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.HeapType){}[0]
-        final fun visitWithLane(net.derfruhling.serene.wasm.instruction/Op, kotlin/Byte) // net.derfruhling.serene.wasm.instruction/AnyInstructionVisitor.TryBlock.visitWithLane|visitWithLane(net.derfruhling.serene.wasm.instruction.Op;kotlin.Byte){}[0]
-    }
 }
 
-abstract class net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter : net.derfruhling.serene.wasm.instruction/InstructionVisitor, net.derfruhling.serene.wasm.instruction/LegacyExceptionsVisitor { // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter|null[0]
+abstract class net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter : net.derfruhling.serene.wasm.instruction/CompleteInstructionVisitor { // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter|null[0]
     constructor <init>(net.derfruhling.serene.wasm.printer/Printer) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.<init>|<init>(net.derfruhling.serene.wasm.printer.Printer){}[0]
 
     final val out // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.out|{}out[0]
@@ -2034,89 +1958,12 @@ abstract class net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter :
     open fun visitIf(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType): net.derfruhling.serene.wasm.instruction/IfBlockVisitor // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.visitIf|visitIf(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType){}[0]
     open fun visitIndex(net.derfruhling.serene.wasm.instruction/Op, kotlin/UInt) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.visitIndex|visitIndex(net.derfruhling.serene.wasm.instruction.Op;kotlin.UInt){}[0]
     open fun visitIndices(net.derfruhling.serene.wasm.instruction/Op, kotlin/UInt, kotlin/UInt) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.visitIndices|visitIndices(net.derfruhling.serene.wasm.instruction.Op;kotlin.UInt;kotlin.UInt){}[0]
-    open fun visitLegacyTry(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType): net.derfruhling.serene.wasm.instruction/LegacyTryBlockVisitor // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.visitLegacyTry|visitLegacyTry(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType){}[0]
     open fun visitMemoryOp(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.instruction/MemArg) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.visitMemoryOp|visitMemoryOp(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.instruction.MemArg){}[0]
     open fun visitMemoryOpWithLane(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.instruction/MemArg, kotlin/Byte) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.visitMemoryOpWithLane|visitMemoryOpWithLane(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.instruction.MemArg;kotlin.Byte){}[0]
     open fun visitSelect(net.derfruhling.serene.wasm.instruction/Op, kotlin.collections/List<net.derfruhling.serene.wasm.module/ValueType>) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.visitSelect|visitSelect(net.derfruhling.serene.wasm.instruction.Op;kotlin.collections.List<net.derfruhling.serene.wasm.module.ValueType>){}[0]
     open fun visitSimple(net.derfruhling.serene.wasm.instruction/Op) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.visitSimple|visitSimple(net.derfruhling.serene.wasm.instruction.Op){}[0]
     open fun visitWithHeapType(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/HeapType) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.visitWithHeapType|visitWithHeapType(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.HeapType){}[0]
     open fun visitWithLane(net.derfruhling.serene.wasm.instruction/Op, kotlin/Byte) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.visitWithLane|visitWithLane(net.derfruhling.serene.wasm.instruction.Op;kotlin.Byte){}[0]
-
-    final inner class IfBlock : net.derfruhling.serene.wasm.instruction/IfBlockVisitor, net.derfruhling.serene.wasm.instruction/InstructionVisitor { // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.IfBlock|null[0]
-        constructor <init>() // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.IfBlock.<init>|<init>(){}[0]
-
-        final fun visitBlock(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType): net.derfruhling.serene.wasm.instruction/InstructionVisitor // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.IfBlock.visitBlock|visitBlock(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType){}[0]
-        final fun visitBranchOnCast(net.derfruhling.serene.wasm.instruction/Op, kotlin/UInt, net.derfruhling.serene.wasm.module/RefType, net.derfruhling.serene.wasm.module/RefType) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.IfBlock.visitBranchOnCast|visitBranchOnCast(net.derfruhling.serene.wasm.instruction.Op;kotlin.UInt;net.derfruhling.serene.wasm.module.RefType;net.derfruhling.serene.wasm.module.RefType){}[0]
-        final fun visitBranchTable(net.derfruhling.serene.wasm.instruction/Op, kotlin.collections/List<kotlin/UInt>, kotlin/UInt) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.IfBlock.visitBranchTable|visitBranchTable(net.derfruhling.serene.wasm.instruction.Op;kotlin.collections.List<kotlin.UInt>;kotlin.UInt){}[0]
-        final fun visitCatchTable(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType, kotlin.collections/List<net.derfruhling.serene.wasm.instruction/Catch>): net.derfruhling.serene.wasm.instruction/InstructionVisitor // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.IfBlock.visitCatchTable|visitCatchTable(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType;kotlin.collections.List<net.derfruhling.serene.wasm.instruction.Catch>){}[0]
-        final fun visitConstF32(net.derfruhling.serene.wasm.instruction/Op, kotlin/Float) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.IfBlock.visitConstF32|visitConstF32(net.derfruhling.serene.wasm.instruction.Op;kotlin.Float){}[0]
-        final fun visitConstF64(net.derfruhling.serene.wasm.instruction/Op, kotlin/Double) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.IfBlock.visitConstF64|visitConstF64(net.derfruhling.serene.wasm.instruction.Op;kotlin.Double){}[0]
-        final fun visitConstI32(net.derfruhling.serene.wasm.instruction/Op, kotlin/Int) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.IfBlock.visitConstI32|visitConstI32(net.derfruhling.serene.wasm.instruction.Op;kotlin.Int){}[0]
-        final fun visitConstI64(net.derfruhling.serene.wasm.instruction/Op, kotlin/Long) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.IfBlock.visitConstI64|visitConstI64(net.derfruhling.serene.wasm.instruction.Op;kotlin.Long){}[0]
-        final fun visitConstV128(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.instruction/VectorValue) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.IfBlock.visitConstV128|visitConstV128(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.instruction.VectorValue){}[0]
-        final fun visitElse(): net.derfruhling.serene.wasm.instruction/InstructionVisitor // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.IfBlock.visitElse|visitElse(){}[0]
-        final fun visitEnd() // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.IfBlock.visitEnd|visitEnd(){}[0]
-        final fun visitIf(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType): net.derfruhling.serene.wasm.instruction/IfBlockVisitor // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.IfBlock.visitIf|visitIf(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType){}[0]
-        final fun visitIndex(net.derfruhling.serene.wasm.instruction/Op, kotlin/UInt) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.IfBlock.visitIndex|visitIndex(net.derfruhling.serene.wasm.instruction.Op;kotlin.UInt){}[0]
-        final fun visitIndices(net.derfruhling.serene.wasm.instruction/Op, kotlin/UInt, kotlin/UInt) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.IfBlock.visitIndices|visitIndices(net.derfruhling.serene.wasm.instruction.Op;kotlin.UInt;kotlin.UInt){}[0]
-        final fun visitMemoryOp(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.instruction/MemArg) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.IfBlock.visitMemoryOp|visitMemoryOp(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.instruction.MemArg){}[0]
-        final fun visitMemoryOpWithLane(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.instruction/MemArg, kotlin/Byte) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.IfBlock.visitMemoryOpWithLane|visitMemoryOpWithLane(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.instruction.MemArg;kotlin.Byte){}[0]
-        final fun visitSelect(net.derfruhling.serene.wasm.instruction/Op, kotlin.collections/List<net.derfruhling.serene.wasm.module/ValueType>) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.IfBlock.visitSelect|visitSelect(net.derfruhling.serene.wasm.instruction.Op;kotlin.collections.List<net.derfruhling.serene.wasm.module.ValueType>){}[0]
-        final fun visitSimple(net.derfruhling.serene.wasm.instruction/Op) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.IfBlock.visitSimple|visitSimple(net.derfruhling.serene.wasm.instruction.Op){}[0]
-        final fun visitWithHeapType(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/HeapType) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.IfBlock.visitWithHeapType|visitWithHeapType(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.HeapType){}[0]
-        final fun visitWithLane(net.derfruhling.serene.wasm.instruction/Op, kotlin/Byte) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.IfBlock.visitWithLane|visitWithLane(net.derfruhling.serene.wasm.instruction.Op;kotlin.Byte){}[0]
-    }
-
-    final inner class LegacyTryBlock : net.derfruhling.serene.wasm.instruction/InstructionVisitor, net.derfruhling.serene.wasm.instruction/LegacyTryBlockVisitor { // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.LegacyTryBlock|null[0]
-        constructor <init>() // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.LegacyTryBlock.<init>|<init>(){}[0]
-
-        final fun visitBlock(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType): net.derfruhling.serene.wasm.instruction/InstructionVisitor // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.LegacyTryBlock.visitBlock|visitBlock(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType){}[0]
-        final fun visitBranchOnCast(net.derfruhling.serene.wasm.instruction/Op, kotlin/UInt, net.derfruhling.serene.wasm.module/RefType, net.derfruhling.serene.wasm.module/RefType) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.LegacyTryBlock.visitBranchOnCast|visitBranchOnCast(net.derfruhling.serene.wasm.instruction.Op;kotlin.UInt;net.derfruhling.serene.wasm.module.RefType;net.derfruhling.serene.wasm.module.RefType){}[0]
-        final fun visitBranchTable(net.derfruhling.serene.wasm.instruction/Op, kotlin.collections/List<kotlin/UInt>, kotlin/UInt) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.LegacyTryBlock.visitBranchTable|visitBranchTable(net.derfruhling.serene.wasm.instruction.Op;kotlin.collections.List<kotlin.UInt>;kotlin.UInt){}[0]
-        final fun visitCatch(kotlin/UInt): net.derfruhling.serene.wasm.instruction/LegacyTryBlockVisitor // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.LegacyTryBlock.visitCatch|visitCatch(kotlin.UInt){}[0]
-        final fun visitCatchAll(): net.derfruhling.serene.wasm.instruction/InstructionVisitor // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.LegacyTryBlock.visitCatchAll|visitCatchAll(){}[0]
-        final fun visitCatchTable(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType, kotlin.collections/List<net.derfruhling.serene.wasm.instruction/Catch>): net.derfruhling.serene.wasm.instruction/InstructionVisitor // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.LegacyTryBlock.visitCatchTable|visitCatchTable(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType;kotlin.collections.List<net.derfruhling.serene.wasm.instruction.Catch>){}[0]
-        final fun visitConstF32(net.derfruhling.serene.wasm.instruction/Op, kotlin/Float) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.LegacyTryBlock.visitConstF32|visitConstF32(net.derfruhling.serene.wasm.instruction.Op;kotlin.Float){}[0]
-        final fun visitConstF64(net.derfruhling.serene.wasm.instruction/Op, kotlin/Double) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.LegacyTryBlock.visitConstF64|visitConstF64(net.derfruhling.serene.wasm.instruction.Op;kotlin.Double){}[0]
-        final fun visitConstI32(net.derfruhling.serene.wasm.instruction/Op, kotlin/Int) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.LegacyTryBlock.visitConstI32|visitConstI32(net.derfruhling.serene.wasm.instruction.Op;kotlin.Int){}[0]
-        final fun visitConstI64(net.derfruhling.serene.wasm.instruction/Op, kotlin/Long) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.LegacyTryBlock.visitConstI64|visitConstI64(net.derfruhling.serene.wasm.instruction.Op;kotlin.Long){}[0]
-        final fun visitConstV128(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.instruction/VectorValue) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.LegacyTryBlock.visitConstV128|visitConstV128(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.instruction.VectorValue){}[0]
-        final fun visitDelegate(kotlin/UInt) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.LegacyTryBlock.visitDelegate|visitDelegate(kotlin.UInt){}[0]
-        final fun visitEnd() // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.LegacyTryBlock.visitEnd|visitEnd(){}[0]
-        final fun visitIf(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType): net.derfruhling.serene.wasm.instruction/IfBlockVisitor // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.LegacyTryBlock.visitIf|visitIf(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType){}[0]
-        final fun visitIndex(net.derfruhling.serene.wasm.instruction/Op, kotlin/UInt) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.LegacyTryBlock.visitIndex|visitIndex(net.derfruhling.serene.wasm.instruction.Op;kotlin.UInt){}[0]
-        final fun visitIndices(net.derfruhling.serene.wasm.instruction/Op, kotlin/UInt, kotlin/UInt) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.LegacyTryBlock.visitIndices|visitIndices(net.derfruhling.serene.wasm.instruction.Op;kotlin.UInt;kotlin.UInt){}[0]
-        final fun visitMemoryOp(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.instruction/MemArg) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.LegacyTryBlock.visitMemoryOp|visitMemoryOp(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.instruction.MemArg){}[0]
-        final fun visitMemoryOpWithLane(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.instruction/MemArg, kotlin/Byte) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.LegacyTryBlock.visitMemoryOpWithLane|visitMemoryOpWithLane(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.instruction.MemArg;kotlin.Byte){}[0]
-        final fun visitSelect(net.derfruhling.serene.wasm.instruction/Op, kotlin.collections/List<net.derfruhling.serene.wasm.module/ValueType>) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.LegacyTryBlock.visitSelect|visitSelect(net.derfruhling.serene.wasm.instruction.Op;kotlin.collections.List<net.derfruhling.serene.wasm.module.ValueType>){}[0]
-        final fun visitSimple(net.derfruhling.serene.wasm.instruction/Op) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.LegacyTryBlock.visitSimple|visitSimple(net.derfruhling.serene.wasm.instruction.Op){}[0]
-        final fun visitWithHeapType(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/HeapType) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.LegacyTryBlock.visitWithHeapType|visitWithHeapType(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.HeapType){}[0]
-        final fun visitWithLane(net.derfruhling.serene.wasm.instruction/Op, kotlin/Byte) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.LegacyTryBlock.visitWithLane|visitWithLane(net.derfruhling.serene.wasm.instruction.Op;kotlin.Byte){}[0]
-    }
-
-    final inner class NestedBlock : net.derfruhling.serene.wasm.instruction/InstructionVisitor { // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.NestedBlock|null[0]
-        constructor <init>() // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.NestedBlock.<init>|<init>(){}[0]
-
-        final fun visitBlock(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType): net.derfruhling.serene.wasm.instruction/InstructionVisitor // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.NestedBlock.visitBlock|visitBlock(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType){}[0]
-        final fun visitBranchOnCast(net.derfruhling.serene.wasm.instruction/Op, kotlin/UInt, net.derfruhling.serene.wasm.module/RefType, net.derfruhling.serene.wasm.module/RefType) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.NestedBlock.visitBranchOnCast|visitBranchOnCast(net.derfruhling.serene.wasm.instruction.Op;kotlin.UInt;net.derfruhling.serene.wasm.module.RefType;net.derfruhling.serene.wasm.module.RefType){}[0]
-        final fun visitBranchTable(net.derfruhling.serene.wasm.instruction/Op, kotlin.collections/List<kotlin/UInt>, kotlin/UInt) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.NestedBlock.visitBranchTable|visitBranchTable(net.derfruhling.serene.wasm.instruction.Op;kotlin.collections.List<kotlin.UInt>;kotlin.UInt){}[0]
-        final fun visitCatchTable(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType, kotlin.collections/List<net.derfruhling.serene.wasm.instruction/Catch>): net.derfruhling.serene.wasm.instruction/InstructionVisitor // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.NestedBlock.visitCatchTable|visitCatchTable(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType;kotlin.collections.List<net.derfruhling.serene.wasm.instruction.Catch>){}[0]
-        final fun visitConstF32(net.derfruhling.serene.wasm.instruction/Op, kotlin/Float) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.NestedBlock.visitConstF32|visitConstF32(net.derfruhling.serene.wasm.instruction.Op;kotlin.Float){}[0]
-        final fun visitConstF64(net.derfruhling.serene.wasm.instruction/Op, kotlin/Double) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.NestedBlock.visitConstF64|visitConstF64(net.derfruhling.serene.wasm.instruction.Op;kotlin.Double){}[0]
-        final fun visitConstI32(net.derfruhling.serene.wasm.instruction/Op, kotlin/Int) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.NestedBlock.visitConstI32|visitConstI32(net.derfruhling.serene.wasm.instruction.Op;kotlin.Int){}[0]
-        final fun visitConstI64(net.derfruhling.serene.wasm.instruction/Op, kotlin/Long) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.NestedBlock.visitConstI64|visitConstI64(net.derfruhling.serene.wasm.instruction.Op;kotlin.Long){}[0]
-        final fun visitConstV128(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.instruction/VectorValue) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.NestedBlock.visitConstV128|visitConstV128(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.instruction.VectorValue){}[0]
-        final fun visitEnd() // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.NestedBlock.visitEnd|visitEnd(){}[0]
-        final fun visitIf(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/BlockType): net.derfruhling.serene.wasm.instruction/IfBlockVisitor // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.NestedBlock.visitIf|visitIf(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.BlockType){}[0]
-        final fun visitIndex(net.derfruhling.serene.wasm.instruction/Op, kotlin/UInt) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.NestedBlock.visitIndex|visitIndex(net.derfruhling.serene.wasm.instruction.Op;kotlin.UInt){}[0]
-        final fun visitIndices(net.derfruhling.serene.wasm.instruction/Op, kotlin/UInt, kotlin/UInt) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.NestedBlock.visitIndices|visitIndices(net.derfruhling.serene.wasm.instruction.Op;kotlin.UInt;kotlin.UInt){}[0]
-        final fun visitMemoryOp(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.instruction/MemArg) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.NestedBlock.visitMemoryOp|visitMemoryOp(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.instruction.MemArg){}[0]
-        final fun visitMemoryOpWithLane(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.instruction/MemArg, kotlin/Byte) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.NestedBlock.visitMemoryOpWithLane|visitMemoryOpWithLane(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.instruction.MemArg;kotlin.Byte){}[0]
-        final fun visitSelect(net.derfruhling.serene.wasm.instruction/Op, kotlin.collections/List<net.derfruhling.serene.wasm.module/ValueType>) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.NestedBlock.visitSelect|visitSelect(net.derfruhling.serene.wasm.instruction.Op;kotlin.collections.List<net.derfruhling.serene.wasm.module.ValueType>){}[0]
-        final fun visitSimple(net.derfruhling.serene.wasm.instruction/Op) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.NestedBlock.visitSimple|visitSimple(net.derfruhling.serene.wasm.instruction.Op){}[0]
-        final fun visitWithHeapType(net.derfruhling.serene.wasm.instruction/Op, net.derfruhling.serene.wasm.module/HeapType) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.NestedBlock.visitWithHeapType|visitWithHeapType(net.derfruhling.serene.wasm.instruction.Op;net.derfruhling.serene.wasm.module.HeapType){}[0]
-        final fun visitWithLane(net.derfruhling.serene.wasm.instruction/Op, kotlin/Byte) // net.derfruhling.serene.wasm.printer/AbstractExpressionFormatter.NestedBlock.visitWithLane|visitWithLane(net.derfruhling.serene.wasm.instruction.Op;kotlin.Byte){}[0]
-    }
 }
 
 abstract class net.derfruhling.serene.wasm.sections/CustomSection : net.derfruhling.serene.wasm.sections/Section { // net.derfruhling.serene.wasm.sections/CustomSection|null[0]
@@ -2867,6 +2714,17 @@ final class net.derfruhling.serene.wasm.sections/UnknownSection : net.derfruhlin
     final fun toString(): kotlin/String // net.derfruhling.serene.wasm.sections/UnknownSection.toString|toString(){}[0]
 }
 
+final class net.derfruhling.serene.wasm/CodeBlob { // net.derfruhling.serene.wasm/CodeBlob|null[0]
+    constructor <init>(kotlinx.io.bytestring/ByteString) // net.derfruhling.serene.wasm/CodeBlob.<init>|<init>(kotlinx.io.bytestring.ByteString){}[0]
+
+    final val byteString // net.derfruhling.serene.wasm/CodeBlob.byteString|{}byteString[0]
+        final fun <get-byteString>(): kotlinx.io.bytestring/ByteString // net.derfruhling.serene.wasm/CodeBlob.byteString.<get-byteString>|<get-byteString>(){}[0]
+    final val isSimpleInlineExpr // net.derfruhling.serene.wasm/CodeBlob.isSimpleInlineExpr|{}isSimpleInlineExpr[0]
+        final fun <get-isSimpleInlineExpr>(): kotlin/Boolean // net.derfruhling.serene.wasm/CodeBlob.isSimpleInlineExpr.<get-isSimpleInlineExpr>|<get-isSimpleInlineExpr>(){}[0]
+
+    final fun visit(net.derfruhling.serene.wasm.instruction/InstructionVisitor) // net.derfruhling.serene.wasm/CodeBlob.visit|visit(net.derfruhling.serene.wasm.instruction.InstructionVisitor){}[0]
+}
+
 final class net.derfruhling.serene.wasm/MutableWasmModule : net.derfruhling.serene.wasm/ModuleVisitor { // net.derfruhling.serene.wasm/MutableWasmModule|null[0]
     constructor <init>() // net.derfruhling.serene.wasm/MutableWasmModule.<init>|<init>(){}[0]
 
@@ -2878,10 +2736,6 @@ final class net.derfruhling.serene.wasm/MutableWasmModule : net.derfruhling.sere
 
 final class net.derfruhling.serene.wasm/PositionKeeper { // net.derfruhling.serene.wasm/PositionKeeper|null[0]
     constructor <init>() // net.derfruhling.serene.wasm/PositionKeeper.<init>|<init>(){}[0]
-
-    final var position // net.derfruhling.serene.wasm/PositionKeeper.position|{}position[0]
-        final fun <get-position>(): kotlin/Long // net.derfruhling.serene.wasm/PositionKeeper.position.<get-position>|<get-position>(){}[0]
-        final fun <set-position>(kotlin/Long) // net.derfruhling.serene.wasm/PositionKeeper.position.<set-position>|<set-position>(kotlin.Long){}[0]
 
     final fun getValue(kotlin/Any?, kotlin.reflect/KProperty<*>): kotlin/Long // net.derfruhling.serene.wasm/PositionKeeper.getValue|getValue(kotlin.Any?;kotlin.reflect.KProperty<*>){}[0]
     final fun inherit(): net.derfruhling.serene.wasm/PositionKeeper // net.derfruhling.serene.wasm/PositionKeeper.inherit|inherit(){}[0]
@@ -2942,9 +2796,9 @@ final class net.derfruhling.serene.wasm/WasmReader { // net.derfruhling.serene.w
     final val isExhausted // net.derfruhling.serene.wasm/WasmReader.isExhausted|{}isExhausted[0]
         final fun <get-isExhausted>(): kotlin/Boolean // net.derfruhling.serene.wasm/WasmReader.isExhausted.<get-isExhausted>|<get-isExhausted>(){}[0]
 
-    final var bytesRead // net.derfruhling.serene.wasm/WasmReader.bytesRead|{}bytesRead[0]
-        final fun <get-bytesRead>(): kotlin/Long // net.derfruhling.serene.wasm/WasmReader.bytesRead.<get-bytesRead>|<get-bytesRead>(){}[0]
-        final fun <set-bytesRead>(kotlin/Long) // net.derfruhling.serene.wasm/WasmReader.bytesRead.<set-bytesRead>|<set-bytesRead>(kotlin.Long){}[0]
+    final var position // net.derfruhling.serene.wasm/WasmReader.position|{}position[0]
+        final fun <get-position>(): kotlin/Long // net.derfruhling.serene.wasm/WasmReader.position.<get-position>|<get-position>(){}[0]
+        final fun <set-position>(kotlin/Long) // net.derfruhling.serene.wasm/WasmReader.position.<set-position>|<set-position>(kotlin.Long){}[0]
 
     final fun <#A1: kotlin/Any?> readList(kotlin/Function1<net.derfruhling.serene.wasm/WasmReader, #A1>): kotlin.collections/List<#A1> // net.derfruhling.serene.wasm/WasmReader.readList|readList(kotlin.Function1<net.derfruhling.serene.wasm.WasmReader,0:0>){0§<kotlin.Any?>}[0]
     final fun advanceTo(net.derfruhling.serene.wasm/WasmReader) // net.derfruhling.serene.wasm/WasmReader.advanceTo|advanceTo(net.derfruhling.serene.wasm.WasmReader){}[0]
@@ -2961,12 +2815,7 @@ final class net.derfruhling.serene.wasm/WasmReader { // net.derfruhling.serene.w
     final fun readLong(): kotlin/Long // net.derfruhling.serene.wasm/WasmReader.readLong|readLong(){}[0]
     final fun readMagicUInt(): kotlin/UInt // net.derfruhling.serene.wasm/WasmReader.readMagicUInt|readMagicUInt(){}[0]
     final fun readOp(): net.derfruhling.serene.wasm.instruction/Op // net.derfruhling.serene.wasm/WasmReader.readOp|readOp(){}[0]
-    final fun readStaticInt(): kotlin/Int // net.derfruhling.serene.wasm/WasmReader.readStaticInt|readStaticInt(){}[0]
-    final fun readStaticLong(): kotlin/Long // net.derfruhling.serene.wasm/WasmReader.readStaticLong|readStaticLong(){}[0]
-    final fun readStaticShort(): kotlin/Short // net.derfruhling.serene.wasm/WasmReader.readStaticShort|readStaticShort(){}[0]
     final fun readStaticUInt(): kotlin/UInt // net.derfruhling.serene.wasm/WasmReader.readStaticUInt|readStaticUInt(){}[0]
-    final fun readStaticULong(): kotlin/ULong // net.derfruhling.serene.wasm/WasmReader.readStaticULong|readStaticULong(){}[0]
-    final fun readStaticUShort(): kotlin/UShort // net.derfruhling.serene.wasm/WasmReader.readStaticUShort|readStaticUShort(){}[0]
     final fun readString(): kotlin/String // net.derfruhling.serene.wasm/WasmReader.readString|readString(){}[0]
     final fun readUInt(): kotlin/UInt // net.derfruhling.serene.wasm/WasmReader.readUInt|readUInt(){}[0]
     final fun readULong(): kotlin/ULong // net.derfruhling.serene.wasm/WasmReader.readULong|readULong(){}[0]
@@ -2999,19 +2848,6 @@ final value class net.derfruhling.serene.wasm.module/ResultType : net.derfruhlin
     final fun equals(kotlin/Any?): kotlin/Boolean // net.derfruhling.serene.wasm.module/ResultType.equals|equals(kotlin.Any?){}[0]
     final fun hashCode(): kotlin/Int // net.derfruhling.serene.wasm.module/ResultType.hashCode|hashCode(){}[0]
     final fun toString(): kotlin/String // net.derfruhling.serene.wasm.module/ResultType.toString|toString(){}[0]
-}
-
-final value class net.derfruhling.serene.wasm/CodeBlob { // net.derfruhling.serene.wasm/CodeBlob|null[0]
-    constructor <init>(kotlinx.io.bytestring/ByteString) // net.derfruhling.serene.wasm/CodeBlob.<init>|<init>(kotlinx.io.bytestring.ByteString){}[0]
-
-    final val byteString // net.derfruhling.serene.wasm/CodeBlob.byteString|{}byteString[0]
-        final fun <get-byteString>(): kotlinx.io.bytestring/ByteString // net.derfruhling.serene.wasm/CodeBlob.byteString.<get-byteString>|<get-byteString>(){}[0]
-
-    final fun equals(kotlin/Any?): kotlin/Boolean // net.derfruhling.serene.wasm/CodeBlob.equals|equals(kotlin.Any?){}[0]
-    final fun hashCode(): kotlin/Int // net.derfruhling.serene.wasm/CodeBlob.hashCode|hashCode(){}[0]
-    final fun isSimpleInlineExpr(): kotlin/Boolean // net.derfruhling.serene.wasm/CodeBlob.isSimpleInlineExpr|isSimpleInlineExpr(){}[0]
-    final fun toString(): kotlin/String // net.derfruhling.serene.wasm/CodeBlob.toString|toString(){}[0]
-    final fun visit(net.derfruhling.serene.wasm.instruction/InstructionVisitor) // net.derfruhling.serene.wasm/CodeBlob.visit|visit(net.derfruhling.serene.wasm.instruction.InstructionVisitor){}[0]
 }
 
 final value class net.derfruhling.serene.wasm/WasmWriter { // net.derfruhling.serene.wasm/WasmWriter|null[0]
@@ -3062,6 +2898,58 @@ open class net.derfruhling.serene.wasm.module/InvalidModuleDataException : kotli
     constructor <init>(kotlin/String?) // net.derfruhling.serene.wasm.module/InvalidModuleDataException.<init>|<init>(kotlin.String?){}[0]
     constructor <init>(kotlin/String?, kotlin/Throwable?) // net.derfruhling.serene.wasm.module/InvalidModuleDataException.<init>|<init>(kotlin.String?;kotlin.Throwable?){}[0]
     constructor <init>(kotlin/Throwable?) // net.derfruhling.serene.wasm.module/InvalidModuleDataException.<init>|<init>(kotlin.Throwable?){}[0]
+}
+
+open class net.derfruhling.serene.wasm.sections/NameSection : net.derfruhling.serene.wasm.sections/CustomSection { // net.derfruhling.serene.wasm.sections/NameSection|null[0]
+    constructor <init>(net.derfruhling.serene.wasm.sections/NameSection.Builder) // net.derfruhling.serene.wasm.sections/NameSection.<init>|<init>(net.derfruhling.serene.wasm.sections.NameSection.Builder){}[0]
+
+    final val fieldNames // net.derfruhling.serene.wasm.sections/NameSection.fieldNames|{}fieldNames[0]
+        final fun <get-fieldNames>(): kotlin.collections/Map<kotlin/UInt, kotlin.collections/Map<kotlin/UInt, kotlin/String>> // net.derfruhling.serene.wasm.sections/NameSection.fieldNames.<get-fieldNames>|<get-fieldNames>(){}[0]
+    final val functionNames // net.derfruhling.serene.wasm.sections/NameSection.functionNames|{}functionNames[0]
+        final fun <get-functionNames>(): kotlin.collections/Map<kotlin/UInt, kotlin/String> // net.derfruhling.serene.wasm.sections/NameSection.functionNames.<get-functionNames>|<get-functionNames>(){}[0]
+    final val localNames // net.derfruhling.serene.wasm.sections/NameSection.localNames|{}localNames[0]
+        final fun <get-localNames>(): kotlin.collections/Map<kotlin/UInt, kotlin.collections/Map<kotlin/UInt, kotlin/String>> // net.derfruhling.serene.wasm.sections/NameSection.localNames.<get-localNames>|<get-localNames>(){}[0]
+    final val moduleName // net.derfruhling.serene.wasm.sections/NameSection.moduleName|{}moduleName[0]
+        final fun <get-moduleName>(): kotlin/String? // net.derfruhling.serene.wasm.sections/NameSection.moduleName.<get-moduleName>|<get-moduleName>(){}[0]
+    final val tagNames // net.derfruhling.serene.wasm.sections/NameSection.tagNames|{}tagNames[0]
+        final fun <get-tagNames>(): kotlin.collections/Map<kotlin/UInt, kotlin/String> // net.derfruhling.serene.wasm.sections/NameSection.tagNames.<get-tagNames>|<get-tagNames>(){}[0]
+    final val typeNames // net.derfruhling.serene.wasm.sections/NameSection.typeNames|{}typeNames[0]
+        final fun <get-typeNames>(): kotlin.collections/Map<kotlin/UInt, kotlin/String> // net.derfruhling.serene.wasm.sections/NameSection.typeNames.<get-typeNames>|<get-typeNames>(){}[0]
+
+    open fun encodeCustom(net.derfruhling.serene.wasm/WasmWriter) // net.derfruhling.serene.wasm.sections/NameSection.encodeCustom|encodeCustom(net.derfruhling.serene.wasm.WasmWriter){}[0]
+
+    open class Builder { // net.derfruhling.serene.wasm.sections/NameSection.Builder|null[0]
+        constructor <init>() // net.derfruhling.serene.wasm.sections/NameSection.Builder.<init>|<init>(){}[0]
+
+        final fun fields(kotlin/UInt, kotlin/Function1<net.derfruhling.serene.wasm.sections/NameSection.Builder.FieldBuilder, kotlin/Unit>) // net.derfruhling.serene.wasm.sections/NameSection.Builder.fields|fields(kotlin.UInt;kotlin.Function1<net.derfruhling.serene.wasm.sections.NameSection.Builder.FieldBuilder,kotlin.Unit>){}[0]
+        final fun function(kotlin/UInt, kotlin/String) // net.derfruhling.serene.wasm.sections/NameSection.Builder.function|function(kotlin.UInt;kotlin.String){}[0]
+        final fun functionLocals(kotlin/UInt, kotlin/Function1<net.derfruhling.serene.wasm.sections/NameSection.Builder.LocalBuilder, kotlin/Unit>) // net.derfruhling.serene.wasm.sections/NameSection.Builder.functionLocals|functionLocals(kotlin.UInt;kotlin.Function1<net.derfruhling.serene.wasm.sections.NameSection.Builder.LocalBuilder,kotlin.Unit>){}[0]
+        final fun module(kotlin/String) // net.derfruhling.serene.wasm.sections/NameSection.Builder.module|module(kotlin.String){}[0]
+        final fun tag(kotlin/UInt, kotlin/String) // net.derfruhling.serene.wasm.sections/NameSection.Builder.tag|tag(kotlin.UInt;kotlin.String){}[0]
+        final fun type(kotlin/UInt, kotlin/String) // net.derfruhling.serene.wasm.sections/NameSection.Builder.type|type(kotlin.UInt;kotlin.String){}[0]
+
+        final value class FieldBuilder { // net.derfruhling.serene.wasm.sections/NameSection.Builder.FieldBuilder|null[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // net.derfruhling.serene.wasm.sections/NameSection.Builder.FieldBuilder.equals|equals(kotlin.Any?){}[0]
+            final fun field(kotlin/UInt, kotlin/String) // net.derfruhling.serene.wasm.sections/NameSection.Builder.FieldBuilder.field|field(kotlin.UInt;kotlin.String){}[0]
+            final fun hashCode(): kotlin/Int // net.derfruhling.serene.wasm.sections/NameSection.Builder.FieldBuilder.hashCode|hashCode(){}[0]
+            final fun toString(): kotlin/String // net.derfruhling.serene.wasm.sections/NameSection.Builder.FieldBuilder.toString|toString(){}[0]
+        }
+
+        final value class LocalBuilder { // net.derfruhling.serene.wasm.sections/NameSection.Builder.LocalBuilder|null[0]
+            final fun equals(kotlin/Any?): kotlin/Boolean // net.derfruhling.serene.wasm.sections/NameSection.Builder.LocalBuilder.equals|equals(kotlin.Any?){}[0]
+            final fun hashCode(): kotlin/Int // net.derfruhling.serene.wasm.sections/NameSection.Builder.LocalBuilder.hashCode|hashCode(){}[0]
+            final fun param(kotlin/UInt, kotlin/String) // net.derfruhling.serene.wasm.sections/NameSection.Builder.LocalBuilder.param|param(kotlin.UInt;kotlin.String){}[0]
+            final fun toString(): kotlin/String // net.derfruhling.serene.wasm.sections/NameSection.Builder.LocalBuilder.toString|toString(){}[0]
+        }
+    }
+
+    final object Companion : net.derfruhling.serene.wasm.sections/CustomSection.Factory<net.derfruhling.serene.wasm.sections/NameSection> { // net.derfruhling.serene.wasm.sections/NameSection.Companion|null[0]
+        final val logger // net.derfruhling.serene.wasm.sections/NameSection.Companion.logger|{}logger[0]
+            final fun <get-logger>(): io.github.oshai.kotlinlogging/KLogger // net.derfruhling.serene.wasm.sections/NameSection.Companion.logger.<get-logger>|<get-logger>(){}[0]
+
+        final fun parseFrom(net.derfruhling.serene.wasm/WasmReader): net.derfruhling.serene.wasm.sections/NameSection // net.derfruhling.serene.wasm.sections/NameSection.Companion.parseFrom|parseFrom(net.derfruhling.serene.wasm.WasmReader){}[0]
+        final inline fun build(kotlin/Function1<net.derfruhling.serene.wasm.sections/NameSection.Builder, kotlin/Unit>): net.derfruhling.serene.wasm.sections/NameSection // net.derfruhling.serene.wasm.sections/NameSection.Companion.build|build(kotlin.Function1<net.derfruhling.serene.wasm.sections.NameSection.Builder,kotlin.Unit>){}[0]
+    }
 }
 
 open class net.derfruhling.serene.wasm/WasmParser : net.derfruhling.serene.wasm/AbstractWasmParser { // net.derfruhling.serene.wasm/WasmParser|null[0]

@@ -4,6 +4,10 @@ import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
+import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
+import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeTest
+import org.jetbrains.kotlin.gradle.tasks.KotlinTest
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -170,6 +174,12 @@ kotlin {
                 }
             }
 
+            group("nonWeb") {
+                group("desktop")
+                withJvm()
+                group("native")
+            }
+
             group("web") {
                 withJs()
                 withWasmJs()
@@ -213,6 +223,10 @@ kotlin {
         klib {
             enabled = true
             keepUnsupportedTargets = true
+        }
+
+        filters {
+            exclude.annotatedWith.add("net.derfruhling.serene.wasm.UnstablePublicApi")
         }
     }
 }
@@ -267,4 +281,103 @@ tasks.register<AggregateTestTask>("test") {
     group = "verification"
 
     dependsOn(testTasks)
+}
+
+abstract class CompileTestCaseParams : WorkParameters {
+    @get:InputFile
+    abstract val inputFile: RegularFileProperty
+
+    @get:OutputFile
+    abstract val outputFile: RegularFileProperty
+}
+
+abstract class CompileTestCase : WorkAction<CompileTestCaseParams> {
+    @get:Inject
+    abstract val execOps: ExecOperations
+
+    override fun execute() {
+        val file = parameters.inputFile.get().asFile
+        val out = parameters.outputFile.get().asFile
+        out.parentFile?.mkdirs()
+
+        execOps.exec {
+            commandLine("wasm-tools", "parse", file.absolutePath, "-o", out.absolutePath)
+        }.rethrowFailure().assertNormalExitValue()
+    }
+}
+
+abstract class CompileTestCases : DefaultTask() {
+    @get:InputFiles
+    @get:Incremental
+    @get:PathSensitive(PathSensitivity.RELATIVE)
+    @get:NormalizeLineEndings
+    abstract val sourceFiles: ConfigurableFileTree
+
+    @get:OutputDirectory
+    abstract val outputDir: DirectoryProperty
+
+    @get:Inject
+    abstract val workerExecutor: WorkerExecutor
+
+    fun compile(queue: WorkQueue, file: File, out: File) {
+        queue.submit(CompileTestCase::class) {
+            inputFile = file
+            outputFile = out
+        }
+    }
+
+    fun getOutputPath(file: File): File {
+        return outputDir.get().asFile.resolve(file.relativeTo(sourceFiles.dir)).let {
+            it.resolveSibling(it.nameWithoutExtension + ".wasm")
+        }
+    }
+
+    @TaskAction
+    fun perform(input: InputChanges) {
+        val queue = workerExecutor.noIsolation()!!
+        if(input.isIncremental) {
+            for(change in input.getFileChanges(sourceFiles)) {
+                if(change.fileType == FileType.MISSING) continue
+
+                val outputPath = getOutputPath(change.file)
+                when (change.changeType) {
+                    ChangeType.ADDED, ChangeType.MODIFIED -> compile(queue, change.file, outputPath)
+                    ChangeType.REMOVED -> outputPath.deleteRecursively()
+                }
+            }
+        } else {
+            outputDir.asFile.get().listFiles()?.forEach { it.deleteRecursively() }
+
+            for(file in sourceFiles) {
+                compile(queue, file, getOutputPath(file))
+            }
+        }
+    }
+}
+
+val testCaseDir = layout.buildDirectory.dir("test-cases").get()
+
+val compileTestCases = tasks.register("compileTestCases", CompileTestCases::class) {
+    description = "Compiles test cases"
+    group = "verification"
+
+    sourceFiles.from(layout.projectDirectory.dir("test-cases"))
+    outputDir = testCaseDir
+}
+
+afterEvaluate {
+    tasks.withType(KotlinNativeTest::class).configureEach {
+        environment("TEST_CASE_PATH", testCaseDir.asFile.toRelativeString(File(workingDir)))
+    }
+
+    tasks.withType(KotlinJsTest::class).configureEach {
+        val testCaseDir = provider { layout.buildDirectory.dir("test-cases").get() }
+        doFirst {
+            environment("TEST_CASE_PATH", testCaseDir.get().asFile.toRelativeString(File(testFramework!!.workingDir.get().asFile.absolutePath)))
+        }
+    }
+
+    tasks.withType(Test::class).configureEach {
+        environment("TEST_CASE_PATH", testCaseDir.asFile.toRelativeString(workingDir))
+    }
 }

@@ -272,6 +272,7 @@ interface OpUsageContext {
         val sizeBytes: NumericValue
 
         fun canGrow(by: NumericValue): Condition
+        fun grow(by: NumericValue)
         fun read(address: NumericValue, size: NumericValue): Value = Value.Unknown
         fun write(address: NumericValue, size: NumericValue, value: Value) {}
         fun write(address: NumericValue, size: NumericValue, value: Data) {}

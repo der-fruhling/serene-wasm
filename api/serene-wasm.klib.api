@@ -8,6 +8,40 @@
 // - Show declarations: true
 
 // Library unique name: <net.derfruhling.serenity:serene-wasm>
+open annotation class net.derfruhling.serene.wasm.instruction/OpContract : kotlin/Annotation { // net.derfruhling.serene.wasm.instruction/OpContract|null[0]
+    constructor <init>(kotlin/String) // net.derfruhling.serene.wasm.instruction/OpContract.<init>|<init>(kotlin.String){}[0]
+
+    final val expr // net.derfruhling.serene.wasm.instruction/OpContract.expr|{}expr[0]
+        final fun <get-expr>(): kotlin/String // net.derfruhling.serene.wasm.instruction/OpContract.expr.<get-expr>|<get-expr>(){}[0]
+
+    open annotation class Args : kotlin/Annotation { // net.derfruhling.serene.wasm.instruction/OpContract.Args|null[0]
+        constructor <init>(kotlin/Array<out kotlin.reflect/KClass<*>>..., kotlin/Boolean = ...) // net.derfruhling.serene.wasm.instruction/OpContract.Args.<init>|<init>(kotlin.Array<out|kotlin.reflect.KClass<*>>...;kotlin.Boolean){}[0]
+
+        final val lastRepeating // net.derfruhling.serene.wasm.instruction/OpContract.Args.lastRepeating|{}lastRepeating[0]
+            final fun <get-lastRepeating>(): kotlin/Boolean // net.derfruhling.serene.wasm.instruction/OpContract.Args.lastRepeating.<get-lastRepeating>|<get-lastRepeating>(){}[0]
+        final val types // net.derfruhling.serene.wasm.instruction/OpContract.Args.types|{}types[0]
+            final fun <get-types>(): kotlin/Array<out kotlin.reflect/KClass<*>> // net.derfruhling.serene.wasm.instruction/OpContract.Args.types.<get-types>|<get-types>(){}[0]
+    }
+
+    open annotation class Block : kotlin/Annotation { // net.derfruhling.serene.wasm.instruction/OpContract.Block|null[0]
+        constructor <init>(kotlin/Boolean) // net.derfruhling.serene.wasm.instruction/OpContract.Block.<init>|<init>(kotlin.Boolean){}[0]
+
+        final val isLoop // net.derfruhling.serene.wasm.instruction/OpContract.Block.isLoop|{}isLoop[0]
+            final fun <get-isLoop>(): kotlin/Boolean // net.derfruhling.serene.wasm.instruction/OpContract.Block.isLoop.<get-isLoop>|<get-isLoop>(){}[0]
+    }
+
+    open annotation class BlockControl : kotlin/Annotation { // net.derfruhling.serene.wasm.instruction/OpContract.BlockControl|null[0]
+        constructor <init>(kotlin/String) // net.derfruhling.serene.wasm.instruction/OpContract.BlockControl.<init>|<init>(kotlin.String){}[0]
+
+        final val type // net.derfruhling.serene.wasm.instruction/OpContract.BlockControl.type|{}type[0]
+            final fun <get-type>(): kotlin/String // net.derfruhling.serene.wasm.instruction/OpContract.BlockControl.type.<get-type>|<get-type>(){}[0]
+    }
+
+    open annotation class RequiresSpecialHandling : kotlin/Annotation { // net.derfruhling.serene.wasm.instruction/OpContract.RequiresSpecialHandling|null[0]
+        constructor <init>() // net.derfruhling.serene.wasm.instruction/OpContract.RequiresSpecialHandling.<init>|<init>(){}[0]
+    }
+}
+
 abstract enum class net.derfruhling.serene.wasm.instruction/OpType : kotlin/Enum<net.derfruhling.serene.wasm.instruction/OpType> { // net.derfruhling.serene.wasm.instruction/OpType|null[0]
     enum entry BLOCK_CONTROL // net.derfruhling.serene.wasm.instruction/OpType.BLOCK_CONTROL|null[0]
     enum entry BLOCK_IF // net.derfruhling.serene.wasm.instruction/OpType.BLOCK_IF|null[0]
@@ -561,6 +595,83 @@ final enum class net.derfruhling.serene.wasm.instruction/Op : kotlin/Enum<net.de
     final fun valueOf(kotlin/String): net.derfruhling.serene.wasm.instruction/Op // net.derfruhling.serene.wasm.instruction/Op.valueOf|valueOf#static(kotlin.String){}[0]
     final fun values(): kotlin/Array<net.derfruhling.serene.wasm.instruction/Op> // net.derfruhling.serene.wasm.instruction/Op.values|values#static(){}[0]
 
+    open annotation class Binary : kotlin/Annotation { // net.derfruhling.serene.wasm.instruction/Op.Binary|null[0]
+        constructor <init>(kotlin/String) // net.derfruhling.serene.wasm.instruction/Op.Binary.<init>|<init>(kotlin.String){}[0]
+
+        final val type // net.derfruhling.serene.wasm.instruction/Op.Binary.type|{}type[0]
+            final fun <get-type>(): kotlin/String // net.derfruhling.serene.wasm.instruction/Op.Binary.type.<get-type>|<get-type>(){}[0]
+    }
+
+    open annotation class BinaryBoolean : kotlin/Annotation { // net.derfruhling.serene.wasm.instruction/Op.BinaryBoolean|null[0]
+        constructor <init>(kotlin/String) // net.derfruhling.serene.wasm.instruction/Op.BinaryBoolean.<init>|<init>(kotlin.String){}[0]
+
+        final val type // net.derfruhling.serene.wasm.instruction/Op.BinaryBoolean.type|{}type[0]
+            final fun <get-type>(): kotlin/String // net.derfruhling.serene.wasm.instruction/Op.BinaryBoolean.type.<get-type>|<get-type>(){}[0]
+    }
+
+    open annotation class ExtractLane : kotlin/Annotation { // net.derfruhling.serene.wasm.instruction/Op.ExtractLane|null[0]
+        constructor <init>(kotlin/String) // net.derfruhling.serene.wasm.instruction/Op.ExtractLane.<init>|<init>(kotlin.String){}[0]
+
+        final val type // net.derfruhling.serene.wasm.instruction/Op.ExtractLane.type|{}type[0]
+            final fun <get-type>(): kotlin/String // net.derfruhling.serene.wasm.instruction/Op.ExtractLane.type.<get-type>|<get-type>(){}[0]
+    }
+
+    open annotation class Load : kotlin/Annotation { // net.derfruhling.serene.wasm.instruction/Op.Load|null[0]
+        constructor <init>(kotlin/String) // net.derfruhling.serene.wasm.instruction/Op.Load.<init>|<init>(kotlin.String){}[0]
+
+        final val from // net.derfruhling.serene.wasm.instruction/Op.Load.from|{}from[0]
+            final fun <get-from>(): kotlin/String // net.derfruhling.serene.wasm.instruction/Op.Load.from.<get-from>|<get-from>(){}[0]
+    }
+
+    open annotation class LoadLane : kotlin/Annotation { // net.derfruhling.serene.wasm.instruction/Op.LoadLane|null[0]
+        constructor <init>(kotlin/String) // net.derfruhling.serene.wasm.instruction/Op.LoadLane.<init>|<init>(kotlin.String){}[0]
+
+        final val from // net.derfruhling.serene.wasm.instruction/Op.LoadLane.from|{}from[0]
+            final fun <get-from>(): kotlin/String // net.derfruhling.serene.wasm.instruction/Op.LoadLane.from.<get-from>|<get-from>(){}[0]
+    }
+
+    open annotation class ReplaceLane : kotlin/Annotation { // net.derfruhling.serene.wasm.instruction/Op.ReplaceLane|null[0]
+        constructor <init>(kotlin/String) // net.derfruhling.serene.wasm.instruction/Op.ReplaceLane.<init>|<init>(kotlin.String){}[0]
+
+        final val type // net.derfruhling.serene.wasm.instruction/Op.ReplaceLane.type|{}type[0]
+            final fun <get-type>(): kotlin/String // net.derfruhling.serene.wasm.instruction/Op.ReplaceLane.type.<get-type>|<get-type>(){}[0]
+    }
+
+    open annotation class Store : kotlin/Annotation { // net.derfruhling.serene.wasm.instruction/Op.Store|null[0]
+        constructor <init>(kotlin/String) // net.derfruhling.serene.wasm.instruction/Op.Store.<init>|<init>(kotlin.String){}[0]
+
+        final val from // net.derfruhling.serene.wasm.instruction/Op.Store.from|{}from[0]
+            final fun <get-from>(): kotlin/String // net.derfruhling.serene.wasm.instruction/Op.Store.from.<get-from>|<get-from>(){}[0]
+    }
+
+    open annotation class StoreLane : kotlin/Annotation { // net.derfruhling.serene.wasm.instruction/Op.StoreLane|null[0]
+        constructor <init>(kotlin/String) // net.derfruhling.serene.wasm.instruction/Op.StoreLane.<init>|<init>(kotlin.String){}[0]
+
+        final val from // net.derfruhling.serene.wasm.instruction/Op.StoreLane.from|{}from[0]
+            final fun <get-from>(): kotlin/String // net.derfruhling.serene.wasm.instruction/Op.StoreLane.from.<get-from>|<get-from>(){}[0]
+    }
+
+    open annotation class Ternery : kotlin/Annotation { // net.derfruhling.serene.wasm.instruction/Op.Ternery|null[0]
+        constructor <init>(kotlin/String) // net.derfruhling.serene.wasm.instruction/Op.Ternery.<init>|<init>(kotlin.String){}[0]
+
+        final val type // net.derfruhling.serene.wasm.instruction/Op.Ternery.type|{}type[0]
+            final fun <get-type>(): kotlin/String // net.derfruhling.serene.wasm.instruction/Op.Ternery.type.<get-type>|<get-type>(){}[0]
+    }
+
+    open annotation class Unary : kotlin/Annotation { // net.derfruhling.serene.wasm.instruction/Op.Unary|null[0]
+        constructor <init>(kotlin/String) // net.derfruhling.serene.wasm.instruction/Op.Unary.<init>|<init>(kotlin.String){}[0]
+
+        final val from // net.derfruhling.serene.wasm.instruction/Op.Unary.from|{}from[0]
+            final fun <get-from>(): kotlin/String // net.derfruhling.serene.wasm.instruction/Op.Unary.from.<get-from>|<get-from>(){}[0]
+    }
+
+    open annotation class UnaryBoolean : kotlin/Annotation { // net.derfruhling.serene.wasm.instruction/Op.UnaryBoolean|null[0]
+        constructor <init>(kotlin/String) // net.derfruhling.serene.wasm.instruction/Op.UnaryBoolean.<init>|<init>(kotlin.String){}[0]
+
+        final val type // net.derfruhling.serene.wasm.instruction/Op.UnaryBoolean.type|{}type[0]
+            final fun <get-type>(): kotlin/String // net.derfruhling.serene.wasm.instruction/Op.UnaryBoolean.type.<get-type>|<get-type>(){}[0]
+    }
+
     final object Companion { // net.derfruhling.serene.wasm.instruction/Op.Companion|null[0]
         final val extOps // net.derfruhling.serene.wasm.instruction/Op.Companion.extOps|{}extOps[0]
             final fun <get-extOps>(): kotlin.collections/Map<kotlin/UByte, kotlin.collections/Map<kotlin/UInt, net.derfruhling.serene.wasm.instruction/Op>> // net.derfruhling.serene.wasm.instruction/Op.Companion.extOps.<get-extOps>|<get-extOps>(){}[0]
@@ -790,6 +901,7 @@ abstract interface net.derfruhling.serene.wasm.instruction/OpUsageContext { // n
             abstract fun <get-sizeBytes>(): net.derfruhling.serene.wasm.instruction/OpUsageContext.NumericValue // net.derfruhling.serene.wasm.instruction/OpUsageContext.Memory.sizeBytes.<get-sizeBytes>|<get-sizeBytes>(){}[0]
 
         abstract fun canGrow(net.derfruhling.serene.wasm.instruction/OpUsageContext.NumericValue): net.derfruhling.serene.wasm.instruction/OpUsageContext.Condition // net.derfruhling.serene.wasm.instruction/OpUsageContext.Memory.canGrow|canGrow(net.derfruhling.serene.wasm.instruction.OpUsageContext.NumericValue){}[0]
+        abstract fun grow(net.derfruhling.serene.wasm.instruction/OpUsageContext.NumericValue) // net.derfruhling.serene.wasm.instruction/OpUsageContext.Memory.grow|grow(net.derfruhling.serene.wasm.instruction.OpUsageContext.NumericValue){}[0]
         open fun read(net.derfruhling.serene.wasm.instruction/OpUsageContext.NumericValue, net.derfruhling.serene.wasm.instruction/OpUsageContext.NumericValue): net.derfruhling.serene.wasm.instruction/OpUsageContext.Value // net.derfruhling.serene.wasm.instruction/OpUsageContext.Memory.read|read(net.derfruhling.serene.wasm.instruction.OpUsageContext.NumericValue;net.derfruhling.serene.wasm.instruction.OpUsageContext.NumericValue){}[0]
         open fun write(net.derfruhling.serene.wasm.instruction/OpUsageContext.NumericValue, net.derfruhling.serene.wasm.instruction/OpUsageContext.NumericValue, net.derfruhling.serene.wasm.instruction/OpUsageContext.Data) // net.derfruhling.serene.wasm.instruction/OpUsageContext.Memory.write|write(net.derfruhling.serene.wasm.instruction.OpUsageContext.NumericValue;net.derfruhling.serene.wasm.instruction.OpUsageContext.NumericValue;net.derfruhling.serene.wasm.instruction.OpUsageContext.Data){}[0]
         open fun write(net.derfruhling.serene.wasm.instruction/OpUsageContext.NumericValue, net.derfruhling.serene.wasm.instruction/OpUsageContext.NumericValue, net.derfruhling.serene.wasm.instruction/OpUsageContext.Value) // net.derfruhling.serene.wasm.instruction/OpUsageContext.Memory.write|write(net.derfruhling.serene.wasm.instruction.OpUsageContext.NumericValue;net.derfruhling.serene.wasm.instruction.OpUsageContext.NumericValue;net.derfruhling.serene.wasm.instruction.OpUsageContext.Value){}[0]

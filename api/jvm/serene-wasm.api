@@ -1034,10 +1034,74 @@ public final class net/derfruhling/serene/wasm/instruction/Op : java/lang/Enum {
 	public static fun values ()[Lnet/derfruhling/serene/wasm/instruction/Op;
 }
 
+public abstract interface annotation class net/derfruhling/serene/wasm/instruction/Op$Binary : java/lang/annotation/Annotation {
+	public abstract fun type ()Ljava/lang/String;
+}
+
+public abstract interface annotation class net/derfruhling/serene/wasm/instruction/Op$BinaryBoolean : java/lang/annotation/Annotation {
+	public abstract fun type ()Ljava/lang/String;
+}
+
 public final class net/derfruhling/serene/wasm/instruction/Op$Companion {
 	public final fun getExtOps ()Ljava/util/Map;
 	public final fun getExtRange ()Lkotlin/ranges/UIntRange;
 	public final fun getStdOps ()Ljava/util/Map;
+}
+
+public abstract interface annotation class net/derfruhling/serene/wasm/instruction/Op$ExtractLane : java/lang/annotation/Annotation {
+	public abstract fun type ()Ljava/lang/String;
+}
+
+public abstract interface annotation class net/derfruhling/serene/wasm/instruction/Op$Load : java/lang/annotation/Annotation {
+	public abstract fun from ()Ljava/lang/String;
+}
+
+public abstract interface annotation class net/derfruhling/serene/wasm/instruction/Op$LoadLane : java/lang/annotation/Annotation {
+	public abstract fun from ()Ljava/lang/String;
+}
+
+public abstract interface annotation class net/derfruhling/serene/wasm/instruction/Op$ReplaceLane : java/lang/annotation/Annotation {
+	public abstract fun type ()Ljava/lang/String;
+}
+
+public abstract interface annotation class net/derfruhling/serene/wasm/instruction/Op$Store : java/lang/annotation/Annotation {
+	public abstract fun from ()Ljava/lang/String;
+}
+
+public abstract interface annotation class net/derfruhling/serene/wasm/instruction/Op$StoreLane : java/lang/annotation/Annotation {
+	public abstract fun from ()Ljava/lang/String;
+}
+
+public abstract interface annotation class net/derfruhling/serene/wasm/instruction/Op$Ternery : java/lang/annotation/Annotation {
+	public abstract fun type ()Ljava/lang/String;
+}
+
+public abstract interface annotation class net/derfruhling/serene/wasm/instruction/Op$Unary : java/lang/annotation/Annotation {
+	public abstract fun from ()Ljava/lang/String;
+}
+
+public abstract interface annotation class net/derfruhling/serene/wasm/instruction/Op$UnaryBoolean : java/lang/annotation/Annotation {
+	public abstract fun type ()Ljava/lang/String;
+}
+
+public abstract interface annotation class net/derfruhling/serene/wasm/instruction/OpContract : java/lang/annotation/Annotation {
+	public abstract fun expr ()Ljava/lang/String;
+}
+
+public abstract interface annotation class net/derfruhling/serene/wasm/instruction/OpContract$Args : java/lang/annotation/Annotation {
+	public abstract fun lastRepeating ()Z
+	public abstract fun types ()[Ljava/lang/Class;
+}
+
+public abstract interface annotation class net/derfruhling/serene/wasm/instruction/OpContract$Block : java/lang/annotation/Annotation {
+	public abstract fun isLoop ()Z
+}
+
+public abstract interface annotation class net/derfruhling/serene/wasm/instruction/OpContract$BlockControl : java/lang/annotation/Annotation {
+	public abstract fun type ()Ljava/lang/String;
+}
+
+public abstract interface annotation class net/derfruhling/serene/wasm/instruction/OpContract$RequiresSpecialHandling : java/lang/annotation/Annotation {
 }
 
 public abstract class net/derfruhling/serene/wasm/instruction/OpType : java/lang/Enum {
@@ -1249,6 +1313,7 @@ public abstract interface class net/derfruhling/serene/wasm/instruction/OpUsageC
 	public abstract fun canGrow (Lnet/derfruhling/serene/wasm/instruction/OpUsageContext$NumericValue;)Lnet/derfruhling/serene/wasm/instruction/OpUsageContext$Condition;
 	public abstract fun getSize ()Lnet/derfruhling/serene/wasm/instruction/OpUsageContext$NumericValue;
 	public abstract fun getSizeBytes ()Lnet/derfruhling/serene/wasm/instruction/OpUsageContext$NumericValue;
+	public abstract fun grow (Lnet/derfruhling/serene/wasm/instruction/OpUsageContext$NumericValue;)V
 	public fun read (Lnet/derfruhling/serene/wasm/instruction/OpUsageContext$NumericValue;Lnet/derfruhling/serene/wasm/instruction/OpUsageContext$NumericValue;)Lnet/derfruhling/serene/wasm/instruction/OpUsageContext$Value;
 	public fun write (Lnet/derfruhling/serene/wasm/instruction/OpUsageContext$NumericValue;Lnet/derfruhling/serene/wasm/instruction/OpUsageContext$NumericValue;Lnet/derfruhling/serene/wasm/instruction/OpUsageContext$Data;)V
 	public fun write (Lnet/derfruhling/serene/wasm/instruction/OpUsageContext$NumericValue;Lnet/derfruhling/serene/wasm/instruction/OpUsageContext$NumericValue;Lnet/derfruhling/serene/wasm/instruction/OpUsageContext$Value;)V

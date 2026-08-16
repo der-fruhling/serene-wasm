@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package net.derfruhling.serene.wasm.instruction
 
 import net.derfruhling.serene.wasm.module.BlockType

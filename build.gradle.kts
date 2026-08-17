@@ -5,9 +5,8 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 import org.jetbrains.kotlin.gradle.dsl.abi.ExperimentalAbiValidation
 import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 import org.jetbrains.kotlin.gradle.targets.js.testing.KotlinJsTest
-import org.jetbrains.kotlin.gradle.targets.jvm.tasks.KotlinJvmTest
 import org.jetbrains.kotlin.gradle.targets.native.tasks.KotlinNativeTest
-import org.jetbrains.kotlin.gradle.tasks.KotlinTest
+import org.jetbrains.kotlin.gradle.tasks.KotlinNativeLink
 
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
@@ -105,7 +104,7 @@ kotlin {
     androidNativeArm64()
     androidNativeX64()
 
-    targets.withType(KotlinNativeTarget::class) {
+    targets.withType(KotlinNativeTarget::class).configureEach {
         binaries.sharedLib()
     }
 
@@ -365,19 +364,20 @@ val compileTestCases = tasks.register("compileTestCases", CompileTestCases::clas
     outputDir = testCaseDir
 }
 
-afterEvaluate {
-    tasks.withType(KotlinNativeTest::class).configureEach {
-        environment("TEST_CASE_PATH", testCaseDir.asFile.toRelativeString(File(workingDir)))
-    }
+// workaround for a weird bug in kotlin's metrics collection code
+tasks.withType(KotlinNativeLink::class) {}
 
-    tasks.withType(KotlinJsTest::class).configureEach {
-        val testCaseDir = provider { layout.buildDirectory.dir("test-cases").get() }
-        doFirst {
-            environment("TEST_CASE_PATH", testCaseDir.get().asFile.toRelativeString(File(testFramework!!.workingDir.get().asFile.absolutePath)))
-        }
-    }
+tasks.withType(KotlinNativeTest::class).configureEach {
+    environment("TEST_CASE_PATH", testCaseDir.asFile.toRelativeString(File(workingDir)))
+}
 
-    tasks.withType(Test::class).configureEach {
-        environment("TEST_CASE_PATH", testCaseDir.asFile.toRelativeString(workingDir))
+tasks.withType(KotlinJsTest::class).configureEach {
+    val testCaseDir = provider { layout.buildDirectory.dir("test-cases").get() }
+    doFirst {
+        environment("TEST_CASE_PATH", testCaseDir.get().asFile.toRelativeString(File(testFramework!!.workingDir.get().asFile.absolutePath)))
     }
+}
+
+tasks.withType(Test::class).configureEach {
+    environment("TEST_CASE_PATH", testCaseDir.asFile.toRelativeString(workingDir))
 }
